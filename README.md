@@ -1,5 +1,5 @@
-neutron-lan (neutron-wan in near future)
-========================================
+nlan
+====
 
 ![neutron-lan testbed](https://raw.github.com/araobp/neutron-lan/master/misc/neutron-lan-testbed.png)
 ![Raspberry Pi](https://raw.github.com/araobp/neutron-lan/master/misc/rpi.png)
