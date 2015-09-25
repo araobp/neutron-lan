@@ -1,0 +1,96 @@
+# 2014/05/07 
+# NLAN Modules testing
+#
+  - do: init.yaml
+  - comment: add, if _controller and not _ovs_bridges_ (failure)
+    nlan:
+        router: openwrt1
+        options: --add
+        args:
+            bridges:
+                controller: tcp:192.168.1.1:6633
+        assertRaises:
+            type: ModelError
+  - comment: add, _ovs_bridges and not _controller
+    nlan:
+        options: --add
+        args:
+            bridges:
+                ovs_bridges: enabled
+  - comment: add, _ovs_bridges and not _controller (ovs-vsctl)
+    nlan:
+        options: --raw
+        args: ovs-vsctl show
+  - comment: add, _ovs_bridges and not _controller (ovs-ofctl)
+    nlan:
+        options: --raw
+        args: ovs-ofctl dump-flows br-tun
+  - comment: add, _ovs_bridges and not _controller (ovsdb)
+    nlan:
+        args: db.state
+        assert:
+            bridges:
+                ovs_bridges: enabled
+  - comment: add, _controller and _ovs_bridges_ (failure)
+    nlan:
+        options: --add
+        args:
+            bridges:
+                controller: tccp:192.168.1.1:6633
+        assertRaises:
+            type: ModelError
+  - comment: add, _controller and _ovs_bridges_
+    nlan:
+        options: --add
+        args:
+            bridges:
+                controller: tcp:192.168.1.1:6633
+  - comment: add, _controller and _ovs_bridges_ (ovs-vsctl)
+    nlan:
+        options: --raw
+        args: ovs-vsctl show
+  - comment: add, _controller and _ovs_bridges_ (ovs-ofctl)
+    nlan:
+        options: --raw
+        args: ovs-ofctl dump-flows br-tun
+  - comment: add, _controller and _ovs_bridges_ (ovsdb)
+    nlan:
+        args: db.state
+        assert:
+            bridges:
+                ovs_bridges: enabled
+                controller: tcp:192.168.1.1:6633
+  - comment: delete, _controller and not _ovs_bridges
+    nlan:
+        options: --delete
+        args:
+            bridges:
+                controller: tcp:192.168.1.1:6633
+  - comment: delete, _controller and not _ovs_bridges (ovs-vsctl)
+    nlan:
+        options: --raw
+        args: ovs-vsctl show
+  - comment: delete, _controller and not _ovs_bridges (ovs-ofctl)
+    nlan:
+        options: --raw
+        args: ovs-ofctl dump-flows br-tun
+  - comment: delete, _controller and not _ovs_bridges (ovsdb)
+    nlan:
+        args: db.state
+        assert:
+            bridges:
+                ovs_bridges: enabled
+  - comment: delete, _ovs_bridges
+    nlan:
+        options: --delete
+        args:
+            bridges:
+                ovs_bridges: enabled
+  - comment: delete, _ovs_bridges (ovs-vsctl)
+    nlan:
+        options: --raw
+        args: ovs-vsctl show
+  - comment: delete, _ovs_bridges (ovsdb)
+    nlan:
+        args: db.state
+        assert: null

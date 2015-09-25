@@ -1,0 +1,57 @@
+Tips with managing services:
+
+* http://www.tldp.org/HOWTO/HighQuality-Apps-HOWTO/boot.html
+* http://www.debuntu.org/how-to-managing-services-with-update-rc-d/
+
+"/etc/init.d/nlan" for Debian
+<pre>
+#! /bin/sh
+#
+### BEGIN INIT INFO
+# Provides:          nlan
+# Required-Start:    $network openvswitch-switch
+# Required-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: NLAN Agent
+# Description:       NLAN Agent is an DevOps agent program
+### END INIT INFO
+
+[ -x /opt/nlan/nlan_agent.py ] || exit 0
+
+start () {
+    python /opt/nlan/nlan_agent.py --init start
+}
+
+stop () {
+    python /opt/nlan/nlan_agent.py --init stop
+}
+
+
+case $1 in
+    start)
+        start
+        ;;
+    stop | force-stop)
+        stop
+        ;;
+    restart)
+        stop
+        start
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart}" >&2
+        exit 1
+        ;;
+esac
+
+exit 0
+
+</pre>
+
+<pre>
+root@rpi1:/etc/rc2.d# update-rc.d nlan defaults
+root@rpi1:/etc/rc2.d# ls -l /etc/rc2.d/ | grep nlan
+lrwxrwxrwx 1 root root  14 Apr 17 02:12 S04nlan -> ../init.d/nlan
+</pre>
+

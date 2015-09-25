@@ -1,0 +1,19 @@
+2014/5/22
+
+At Debian Linux (DHCP client),
+<pre>
+$ ip netns list
+$ ip netns exec <netns> dhclient eth0
+</pre>
+
+At OpenWrt (DHCP server),
+<pre>
+$ cat /tmp/dhcp.leases
+</pre>
+
+UCI
+---
+<pre>
+$ uci show network
+$ uci show dhcp
+</pre>

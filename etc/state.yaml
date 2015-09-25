@@ -1,0 +1,164 @@
+#!template.dvsdvr
+# The top line declares the corresponding template module.
+#
+# Ver 0.1: 2014/2/5
+# Ver 0.2: 2014/2/27
+# Ver 0.3: 2014/3/3
+# Ver 0.4: 2014/3/28
+# Ver 0.5: 2014/4/3, works with a template engine
+# Ver 0.6: 2014/4/11, Service Function Chaining (NFV)
+# Ver 0.7: 2014/5/9, ip_dvr as a map
+#
+# OpenWRT DVS/DVR YAML config file
+#
+# A corresponding template module fills out all placeholders <...>
+#
+#
+#  vid:1 toploogy
+#
+#  [rpi1]----vni---[openwrt1]
+#    | \     1001
+#    |    \
+#  vni101   \ vni101
+#    |         \
+#    |            \
+# [openwrt2]--vni--[openwrt3]
+#             101
+#
+openwrt1:
+   bridges: 
+      ovs_bridges: enabled
+#     controller: tcp:192.168.1.1:6633
+   gateway:
+     rip: enabled
+#     network: eth0.2
+     network: eth2 
+   vxlan:
+      - local_ip: <local_ip> 
+        remote_ips: <remote_ips>
+   subnets:
+      - vid: 1
+        vni: 1001
+        ip_dvr:
+            addr: '10.0.1.1/24'
+            mode: hub 
+            dhcp: enabled
+        ip_vhost: '10.0.1.101/24'
+#       ports:
+#          - eth0.1 
+#          - veth0.1
+        peers: <peers> 
+      - vid: 3
+        vni: 103
+        ip_dvr:
+            addr: '10.0.3.1/24'
+            mode: dvr 
+            dhcp: enabled
+        ip_vhost: '10.0.3.101/24'
+#       ports:
+#          - eth0.3
+#          - veth0.3
+        peers: <peers>
+      - vid: 2
+        vni: 1
+        ip_dvr: 
+            addr: '192.168.100.1/24'
+            mode: dvr
+        ip_vhost: '192.168.100.101/24'
+        peers: <peers> 
+
+openwrt2:
+   bridges: 
+      ovs_bridges: enabled
+#     controller: tcp:192.168.1.1:6633
+   vxlan:
+      - local_ip: <local_ip> 
+        remote_ips: <remote_ips>
+   subnets:
+      - vid: 1
+        vni: 101
+        ip_dvr: 
+            addr: '10.0.1.1/24'
+            mode: spoke_dvr
+        ip_vhost: '10.0.1.102/24'
+#       ports:
+#          - eth0.1
+#          - veth0.1
+        peers: <peers>
+      - vid: 3
+        vni: 103
+        ip_dvr:
+            addr: '10.0.3.1/24'
+            mode: dvr
+        ip_vhost: '10.0.3.102/24'
+#       ports:
+#          - eth0.3
+#          - veth0.3
+        peers: <peers>
+      - vid: 2
+        vni: 1
+        ip_dvr:
+            addr: '192.168.100.2/24'
+            mode: dvr
+        default_gw: '192.168.100.1'
+        ip_vhost: '192.168.100.102/24'
+        peers: <peers> 
+
+
+openwrt3:
+   bridges:
+     ovs_bridges: enabled
+#    controller: tcp:192.168.1.1:6633
+   vxlan:
+     - local_ip: <local_ip> 
+       remote_ips: <remote_ips>
+   subnets:
+      - vid: 1
+        vni: 101
+        ip_dvr:
+            addr: '10.0.1.1/24'
+            mode: spoke_dvr
+        ip_vhost: '10.0.1.103/24'
+#       ports:
+#          - eth0.1
+#          - veth0.1
+        peers: <peers>
+      - vid: 3
+        vni: 103
+        ip_dvr:
+            addr: '10.0.3.1/24'
+            mode: dvr
+        ip_vhost: '10.0.3.103/24'
+#       ports:
+#          - eth0.3
+#          - veth0.3
+        peers: <peers>
+      - vid: 2
+        vni: 1
+        ip_dvr:
+            addr: '192.168.100.3/24'
+            mode: dvr
+        default_gw: '192.168.100.1'
+        ip_vhost: '192.168.100.103/24'
+        peers: <peers> 
+
+rpi1:
+   bridges:
+      ovs_bridges: enabled
+#     controller: tcp:192.168.1.1:6633
+   services: # Service Functions
+      - name: snort1
+        chain: [mz.101, dmz.1001]
+   vxlan:
+      - local_ip: <local_ip> 
+        remote_ips: <remote_ips>
+   subnets:
+      - vid: 111 
+        vni: 1001
+        peers: <peers>
+        ports: <sfports> 
+      - vid: 1
+        vni: 101
+        peers: <peers> 
+        ports: <sfports>
+

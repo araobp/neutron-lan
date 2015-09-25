@@ -1,0 +1,29 @@
+  - comment: get test
+    nlan:
+        router: rpi1
+        options: --get
+        args:
+            subnets:
+                - _index: [vni, 101]
+                  vid: null
+                  ports: null
+        assert:
+            subnets:
+                - vid: 1
+                  ports:
+                    - mz.101
+  - comment: get test
+    nlan:
+        router: rpi1
+        options: --get
+        args:
+            subnets:
+                - _index: [vni, 101]
+  - comment: get test
+    nlan:
+        router: rpi1
+        options: --get
+        args:
+            subnets: null
+
+        

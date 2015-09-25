@@ -1,0 +1,14 @@
+# 2014/05/08 
+# NLAN Modules testing
+#
+  - do: init.yaml
+  - comment: 'error condtion'
+    nlan:
+        router: openwrt1
+        options: --add
+        args:
+            services:
+                - _index: [name, snort1]
+                  name: 111
+
+

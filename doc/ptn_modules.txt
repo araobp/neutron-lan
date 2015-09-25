@@ -1,0 +1,111 @@
+PTN modules
+===========
+
+nlan with the PTN modules can be used as a network simulator:
+- Pseudo-wire and VPLS (Packet Transport Network) simulation
+- OFS network simulation
+
+Optionally you may run Quagga as a routing daemon to set the routing table autonomousely. nlan does not provide any support for IP routing at the moment, so you have to manually configure Quagga by using vtysh. 
+
+"vhosts" module is for simulating LAN (hubs and hosts) behind CE router.
+
+                           <------- "ptn_l2vpn" ------------------->
+<- "vhosts" ->                <-- "ptn_nodes" --><-- "ptn_links" -->
+               . . . . . .
+               :         :
+          +--+ :         :    +------+    +------+    VXLAN tunnel
+[vHost]---|br| : Linux   : O--|      |    |      |  /
+[vHost]---|  | : Routing :    |br-int|    |br-tun|/
+          +--+ :         :    |      |====|      |--- VXLAN tunnel
+          +--+ :         :    |      |    |      |\
+[vHost]---|br| :         : O--|      |    |      |  \
+[vHost]---|  | :         :    +------+    +------+    VXLAN tunnel
+          +--+ :         :
+               . . . . . .
+
+PTN modules are comprised of the following ones:
+* "ptn_nodes" module creates br-tun and br-int.
+* "ptn_links" module creates VXLAN tunnles.
+* "ptn_l2vpn" module creates either pseudo-wire or VPLS per VID/VNI.
+* "vhosts" module creates virtual hosts and linux bridges associated with the hosts. 
+
+
+OpenFlow support
+----------------
+Here, I use "ryu"(flow) as a reference OpenFlow controller.
+
+To install ryu,
+$ pip install ryu
+
+To show a list of ryu applications:
+$ ls /usr/local/lib/python2.7/dist-packages/ryu/app
+
+To start a specific app "simple-switch13"
+$ ryu-manager simple-switch13
+
+
+Network configuration to simulate OFS network
+
+                                          [ ryu  ]
+                                          tcp 6633
+                                             ^
+                                             | OpenFlow
+                                             | Secure Channel
+               . . . . . .                   |
+               :         :                   |
+          +--+ :         :                +------+    VXLAN tunnel
+[vHost]---|br|O---------------------------|      |  /
+[vHost]---|  | : Routing :                |br-tun|/
+          +--+ :         :                |      |--- VXLAN tunnel
+          +--+ :         :                |      |\
+[vHost]---|br|O---------------------------|      |  \
+[vHost]---|  | :         :                +------+    VXLAN tunnel
+          +--+ :         :                This br-tun
+               . . . . . .                works as OFS
+                                          in this case.
+
+And here is a sample YAML config for nlan to create two OFSes connected to each other:
+- - - - - -
+openwrt1:
+   ptn_nodes:
+      - id: of_net
+        nodes:
+          ptn: ptn_1
+          l2sw: l2sw_1
+        controller: tcp:10.8.0.1:6633  <== IP address of ryu controller
+   ptn_links:
+      - id: of_net
+        local_ip: <local_ip>
+        remote_ips: [192.168.56.102]
+   vhosts:
+      - network: 172.20.107.1/24
+        vhosts: 2
+        connect: ptn_1  <== The linux bridge connects to ptn_1.
+      - network: 172.21.107.1/24
+        vhosts: 2
+        connect: ptn_1  <== The linux bridge connects to ptn_1.
+openwrt2:
+   ptn_nodes:
+      - id: of_net
+        nodes:
+          ptn: ptn_2
+          l2sw: l2sw_2
+        controller: tcp:10.8.0.1:6633
+   ptn_links:
+      - id: of_net
+        local_ip: <local_ip>
+        remote_ips: [192.168.56.101]
+   vhosts:
+      - network: 172.20.107.4/24
+        vhosts: 2
+        connect: ptn_2
+      - network: 172.21.107.4/24
+        vhosts: 2
+        connect: ptn_2
+- - - - -
+
+TODO
+----
+* Support vHosts directly connected to br-tun.
+* Some utility tool to send ping from within netns.
+

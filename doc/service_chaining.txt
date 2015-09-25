@@ -1,0 +1,80 @@
+2014/4/8
+
+I. SERVICE FUNCTION INSTALLTAION
+
+NLAN takes care of only service chaining and service function initiation. You need to have service functions (lxc containers) preinstalled before service chaining.
+
+This installation process assumes Debian Linux VirtualBox image:
+
+$ apt-get install lxc
+$ lxc-create -n snort1 -t debian
+
+---
+/etc/network/interfaces
+
+# The primary network interface
+auto eth0
+iface eth0 inet manual
+
+auto virbr0
+iface virbr0 inet dhcp
+bridge_ports eth0
+
+/var/lib/lxc/<container_name>/config
+
+lxc.utsname = snort1
+lxc.network.type = veth
+lxc.network.flags = up
+lxc.network.link = virbr0
+lxc.network.ipv4 = 0.0.0.0/24
+---
+
+$ lxc-start -n snort1
+
+$ export http_proxy=... (if necessary)
+
+$ apt-get update
+
+$ apt-get install vim
+$ apt-get install bridge-utils
+$ apt-get install iptables
+$ apt-get install tcpdump
+$ apt-get install iputils-ping 
+$ apt-get install snort
+
+Refer to this mail if you want to create a 'debian-wheey' container:
+http://permalink.gmane.org/gmane.linux.kernel.containers.lxc.general/5102
+
+---
+/etc/network/interfaces
+
+auto eth0
+iface eth0 inet manual
+
+auto eth1
+iface eth1 inet manual
+
+auto br0
+iface br0 inet static
+bridge_ports eth0 eth1
+address 192.168.100.104
+netmask 255.255.255.0
+gateway 192.168.100.1
+---
+
+
+II. NLAN SIT
+
+At rpi1,
+
+$ lxc-stop -n snort1 
+
+Delelte all the lines starting with 'lxc.network' in /usr/lib/lxc/<container_name>/config
+
+At NLAN-Master host,
+$ sit.sh
+
+The SIT should succeed.
+
+
+

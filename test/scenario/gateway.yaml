@@ -1,0 +1,37 @@
+# 2014/05/08 
+# NLAN Modules testing
+#
+  - do: init.yaml
+  - comment: 'add: _rip and _network'
+    nlan:
+        router: openwrt1
+        options: --add
+        args:
+            gateway:
+                rip: enabled
+                network: eth2
+  - comment: 'add: _rip and _network (cat)'
+    nlan:
+        options: --raw
+        args: 'cat /etc/quagga/ripd.conf; cat /etc/quagga/zebra.conf'
+  - comment: 'update: _network'
+    nlan:
+        options: --update
+        args:
+            gateway:
+                network: eth1
+  - comment: 'update: _rip and _network (cat)'
+    nlan:
+        options: --raw
+        args: 'cat /etc/quagga/ripd.conf; cat /etc/quagga/zebra.conf'
+  - comment: 'delete: _rip and _network'
+    nlan:
+        options: --delete
+        args:
+            gateway:
+                rip: enabled
+                network: eth1
+  - comment: 'delete: _rip and _network (cat)'
+    nlan:
+        options: --raw
+        args: 'cat /etc/quagga/ripd.conf; cat /etc/quagga/zebra.conf'

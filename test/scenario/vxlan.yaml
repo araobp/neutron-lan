@@ -1,0 +1,105 @@
+# 2014/05/08 
+# NLAN Modules testing
+#
+  - do: init.yaml
+  - comment: 'add ovs_bridges'
+    nlan:
+        router: openwrt1
+        options: --add
+        args:
+            bridges:
+                ovs_bridges: enabled
+  - comment: 'add ovs_bridges (ovsdb)'
+    nlan:
+        args: db.state
+        assert:
+            bridges:
+                ovs_bridges: enabled
+  - comment: 'add: _local_ip and _remote_ips'
+    nlan:
+        options: --add
+        args:
+            vxlan:
+                local_ip: 192.168.1.101
+                remote_ips:
+                    - 192.168.1.102
+                    - 192.168.1.103
+  - comment: 'add: _local_ip and _remote_ips (ovs-vsctl)'
+    nlan:
+        options: --raw
+        args: 'ovs-vsctl show'
+  - comment: 'add: _local_ip and _remote_ips (ovsdb)'
+    nlan:
+        args: 'db.getrow vxlan'
+        assert:
+            local_ip: 192.168.1.101
+            remote_ips:
+                - 192.168.1.102
+                - 192.168.1.103
+  - comment: 'update: _local_ip'
+    nlan:
+        options: --update
+        args:
+            vxlan:
+                local_ip: 192.168.1.191
+  - comment: 'update: _local_ip (ovsdb)'
+    nlan:
+        args: 'db.getrow vxlan'
+        assert:
+            local_ip: 192.168.1.191
+            remote_ips:
+                - 192.168.1.102
+                - 192.168.1.103
+  - comment: 'update: _remote_ips'
+    nlan:
+        options: --update
+        args:
+            vxlan:
+                remote_ips:
+                    - 192.168.1.102
+                    - 192.168.1.103
+                    - 192.168.1.104
+  - comment: 'update: _remote_ips (ovs-vsctl)'
+    nlan:
+        options: --raw
+        args: 'ovs-vsctl show'
+  - comment: 'update: _remote_ips (ovsdb)'
+    nlan:
+        args: 'db.getrow vxlan'
+        assert:
+            local_ip: 192.168.1.191
+            remote_ips:
+                - 192.168.1.102
+                - 192.168.1.103
+                - 192.168.1.104
+  - comment: 'delete: _remote_ips'
+    nlan:
+        options: --delete
+        args:
+            vxlan:
+                remote_ips:
+                    - 192.168.1.102
+                    - 192.168.1.103
+                    - 192.168.1.104
+  - comment: 'delete: _remote_ips (ovsdb)'
+    nlan:
+        args: 'db.getrow vxlan'
+        assert:
+            local_ip: 192.168.1.191
+  - comment: 'delete: _local_ip'
+    nlan:
+        options: --delete
+        args:
+            vxlan:
+                local_ip: 192.168.1.191
+  - comment: 'delete: _local_ip (ovs-vsctl)'
+    nlan:
+        options: --raw
+        args: 'ovs-vsctl show'
+  - comment: 'delete: _local_ip (ovsdb)'
+    nlan:
+        args: 'db.getrow vxlan'
+        assert: null
+
+
+

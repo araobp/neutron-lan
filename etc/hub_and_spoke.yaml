@@ -1,0 +1,82 @@
+#!template.dvsdvr
+#
+# Symetric overlay network configuration
+#
+#           openwrt1 (hub)
+#            /  |  \
+#          /    |     \
+#        /      |       \
+#      /        |         \
+#    /          |           \
+# openwrt2   openwrt3      rpi1
+# (spoke)    (spoke)      (spoke)
+#
+openwrt1:
+   bridges: 
+      ovs_bridges: enabled
+   vxlan:
+      - local_ip: <local_ip> 
+        remote_ips: <remote_ips>
+   subnets:
+      - vid: 1
+        vni: 101
+        ip_dvr: {addr: 10.0.1.1/24, mode: hub, dhcp: enabled}
+        ip_vhost: 10.0.1.101/24
+        peers: <peers> 
+      - vid: 3
+        vni: 103
+        ip_dvr: {addr: 10.0.3.1/24, mode: hub, dhcp: enabled}
+        ip_vhost: 10.0.3.101/24
+        peers: <peers>
+openwrt2:
+   bridges: 
+      ovs_bridges: enabled
+   vxlan:
+      - local_ip: <local_ip> 
+        remote_ips: [192.168.1.101] 
+   subnets:
+      - vid: 1
+        vni: 101
+        ip_dvr: {addr: 10.0.1.1/24, mode: spoke}
+        ip_vhost: 10.0.1.102/24
+        peers: [192.168.1.101] 
+      - vid: 3
+        vni: 103
+        ip_dvr: {addr: 10.0.3.1/24, mode: spoke} 
+        ip_vhost: 10.0.3.102/24
+        peers: [192.168.1.101] 
+openwrt3:
+   bridges:
+     ovs_bridges: enabled
+   vxlan:
+     - local_ip: <local_ip> 
+       remote_ips: [192.168.1.101] 
+   subnets:
+      - vid: 1
+        vni: 101
+        ip_dvr: {addr: 10.0.1.1/24, mode: spoke}
+        ip_vhost: 10.0.1.103/24
+        peers: [192.168.1.101] 
+      - vid: 3
+        vni: 103
+        ip_dvr: {addr: 10.0.3.1/24, mode: spoke}
+        ip_vhost: 10.0.3.103/24
+        peers: [192.168.1.101] 
+rpi1:
+   bridges:
+     ovs_bridges: enabled
+   vxlan:
+     - local_ip: <local_ip> 
+       remote_ips: [192.168.1.101] 
+   subnets:
+      - vid: 1
+        vni: 101
+        ip_dvr: {addr: 10.0.1.1/24, mode: spoke}
+        ip_vhost: 10.0.1.104/24 
+        peers: [192.168.1.101] 
+      - vid: 3
+        vni: 103
+        ip_dvr: {addr: 10.0.3.1/24, mode: spoke}
+        ip_vhost: 10.0.3.104/24 
+        peers: [192.168.1.101] 
+

@@ -1,0 +1,11 @@
+#! /bin/sh /etc/rc.common
+# /2014/4/21
+
+START=85  
+
+[ -x /opt/nlan/nlan_agent.py ] || exit 0
+
+start () {
+    python /opt/nlan/nlan_agent.py --init start --debug > /tmp/nlan.log
+}
+

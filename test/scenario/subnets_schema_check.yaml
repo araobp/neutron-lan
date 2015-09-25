@@ -1,0 +1,17 @@
+  - do: init.yaml 
+  - comment: illegal ip_dvr params
+    nlan:
+        router: openwrt1
+        options: --add
+        args:
+            bridges:
+                ovs_bridges: enabled
+            vxlan:
+                local_ip: 192.168.1.101
+                remote_ips: [192.168.1.102]
+            subnets:
+                - _index: [vni, 10]
+                  vni: 10
+                  vid: 1
+                  ip_dvr: {addr: 10.0.1.1/24, momo: dvr}
+

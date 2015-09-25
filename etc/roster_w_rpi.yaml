@@ -1,0 +1,30 @@
+# 2014/2/6
+# Roster of OpenWRT routers. 
+#
+
+openwrt1:
+   host: 192.168.1.101
+   user: root
+   passwd: root
+   platform: openwrt 
+
+openwrt2:
+   host: 192.168.1.102
+   user: root
+   passwd: root
+   platform: openwrt 
+
+openwrt3:
+   host: 192.168.1.103
+   user: root
+   passwd: root
+   platform: openwrt 
+
+rpi1:
+   host: 192.168.1.104
+   user: root
+   passwd: root
+#  platform: raspbian
+#  platform: openwrt
+   platform: debian
+

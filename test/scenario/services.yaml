@@ -1,0 +1,97 @@
+# 2014/05/08 
+# NLAN Modules testing
+#
+  - do: init2.yaml
+  - comment: add _name
+    nlan:
+        router: rpi1
+        options: --add
+        args:
+            services:
+                - _index: [name, snort1]
+                  name: snort1
+  - comment: add _name (lxc-list)
+    nlan:
+        options: --raw
+        args: lxc-list; ip link show
+  - comment: add _name (ovsdb)
+    nlan:
+        args: db.getrow services name snort1
+        assert:
+            name: snort1
+  - comment: add _chain
+    nlan:
+        options: --add
+        args:
+            services:
+                - _index: [name, snort1]
+                  chain:
+                    - aaa.101
+                    - bbb.102
+  - comment: add _chain (lxc-list)
+    nlan:
+        options: --raw
+        args: lxc-list; ip link show
+  - comment: add _chain (ovsdb)
+    nlan:
+        args: db.getrow services name snort1
+        assert:
+            name: snort1
+            chain:
+                - aaa.101
+                - bbb.102
+  - sleep: 3
+  - comment: update _chain
+    nlan:
+        options: --update
+        args:
+            services:
+                - _index: [name, snort1]
+                  chain:
+                    - aaa.101
+                    - bbb.192
+  - comment: update _chain (lxc-list)
+    nlan:
+        options: --raw
+        args: lxc-list; ip link show
+  - comment: update _chain (ovsdb)
+    nlan:
+        args: db.getrow services name snort1
+        assert:
+            name: snort1
+            chain:
+                - aaa.101
+                - bbb.192
+  - comment: delete _chain
+    nlan:
+        options: --delete
+        args:
+            services:
+                - _index: [name, snort1]
+                  chain:
+                    - aaa.101
+                    - bbb.192
+  - comment: delete _chain (lxc-list)
+    nlan:
+        options: --raw
+        args: lxc-list; ip link show
+  - comment: delete _chain (ovsdb)
+    nlan:
+        args: db.getrow services name snort1
+        assert:
+            name: snort1
+  - speep: 3
+  - comment: delete _name
+    nlan:
+        options: --delete
+        args:
+            services:
+                - _index: [name, snort1]
+                  name: snort1
+  - comment: delete _name (ovsdb)
+    nlan:
+        args: db.getrow services name snort1
+        assert: null
+
+
+

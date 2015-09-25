@@ -1,0 +1,10 @@
+# 2014/05/08 
+# NLAN Modules testing
+#
+  - comment: copy the latest modules to the targets
+    nlan:
+        router: rpi1
+        options: --scpmod
+  - comment: initialization
+    nlan:
+        args: init.run

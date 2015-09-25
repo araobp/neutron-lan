@@ -1,0 +1,64 @@
+#!template.dvsdvr
+# Oct 2014
+# WAN simulation network 
+# This YAML config deploys Packet Transport Network simulating VPLS. 
+# And br-tun is controlled by OpenFlow controller.
+
+# Node 1: ptn_1 is OFS controlled by OFC, whereas l2sw_1 and 
+# other linux bridges are normal learning switches.
+openwrt1:
+   ptn_nodes:
+      - id: of_net 
+        nodes:
+          ptn: ptn_1 
+          l2sw: l2sw_1 
+        controller: tcp:10.8.0.1:6633
+   ptn_links:
+      - id: of_net 
+        local_ip: <local_ip>
+        remote_ips: [192.168.56.102, 192.168.56.103]
+   command:
+       command:
+         - ip route add 10.8.0.0/24 via 192.168.56.200
+openwrt2:
+   ptn_nodes:
+      - id: of_net 
+        nodes:
+          ptn: ptn_2 
+          l2sw: l2sw_2 
+        controller: tcp:10.8.0.1:6633
+   ptn_links:
+      - id: of_net 
+        local_ip: <local_ip>
+        remote_ips: [192.168.56.101]
+   vhosts:
+      - network: 172.20.107.4/24
+        vhosts: 2
+        connect: ptn_2
+      - network: 172.21.107.4/24
+        vhosts: 2
+        connect: ptn_2
+   command:
+       command:
+         - ip route add 10.8.0.0/24 via 192.168.56.200
+openwrt3:
+   ptn_nodes:
+      - id: of_net 
+        nodes:
+          ptn: ptn_3 
+          l2sw: l2sw_3 
+        controller: tcp:10.8.0.1:6633
+   ptn_links:
+      - id: of_net 
+        local_ip: <local_ip>
+        remote_ips: [192.168.56.101]
+   vhosts:
+      - network: 172.20.107.7/24
+        vhosts: 2
+        connect: ptn_3
+      - network: 172.21.107.7/24
+        vhosts: 2
+        connect: ptn_3
+   command:
+       command:
+         - ip route add 10.8.0.0/24 via 192.168.56.200

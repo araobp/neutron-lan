@@ -1,0 +1,23 @@
+openwrt1:
+   host: 192.168.56.101
+   user: root
+   passwd: root
+   platform: openwrt 
+
+openwrt2:
+   host: 192.168.56.102
+   user: root
+   passwd: root
+   platform: openwrt 
+
+openwrt3:
+   host: 192.168.56.103
+   user: root
+   passwd: root
+   platform: openwrt 
+
+#master:
+#   host: 192.168.56.200
+#   user: root
+#   passwd: root
+#   platform: debian

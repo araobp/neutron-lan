@@ -1,0 +1,50 @@
+# July 2014 
+# Roster of seven OpenWRT routers and one Debian Linux server. 
+
+openwrt1:
+   host: 192.168.56.101
+   user: root
+   passwd: root
+   platform: openwrt 
+
+openwrt2:
+   host: 192.168.56.102
+   user: root
+   passwd: root
+   platform: openwrt 
+
+openwrt3:
+   host: 192.168.56.103
+   user: root
+   passwd: root
+   platform: openwrt 
+
+openwrt4:
+   host: 192.168.56.104
+   user: root
+   passwd: root
+   platform: openwrt 
+
+openwrt5:
+   host: 192.168.56.105
+   user: root
+   passwd: root
+   platform: openwrt 
+
+openwrt6:
+   host: 192.168.56.106
+   user: root
+   passwd: root
+   platform: openwrt 
+
+openwrt7:
+   host: 192.168.56.107
+   user: root
+   passwd: root
+   platform: openwrt 
+
+master:
+   host: 192.168.56.200
+   user: root
+   passwd: root
+   platform: debian

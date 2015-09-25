@@ -1,0 +1,206 @@
+#!template.dvsdvr
+# WAN simulation network 
+# This YAML config deploys multi-layer VXLAN networks:
+# VXLAN over VXLAN.
+
+# P router
+openwrt1:
+   bridges:
+      ovs_bridges: enabled
+   vxlan:
+      - local_ip: <local_ip>
+        remote_ips: [192.168.56.102, 192.168.56.103, 192.168.56.104, 192.168.56.200]
+   vpls:
+      - vid: 102
+        vni: 101102
+        peers: [192.168.56.102] 
+        ip: 10.101.102.1/24 
+      - vid: 103
+        vni: 101103
+        peers: [192.168.56.103] 
+        ip: 10.101.103.1/24 
+      - vid: 104 
+        vni: 101104
+        peers: [192.168.56.104] 
+        ip: 10.101.104.1/24 
+      - vid: 200
+        vni: 200101
+        peers: [192.168.56.200]
+        ip: 10.200.101.2/24
+
+# PE router
+openwrt2:
+   bridges:
+      ovs_bridges: enabled
+   vxlan:
+      - local_ip: <local_ip>
+        #remote_ips: [192.168.56.101, 192.168.56.105, 192.168.56.200] 
+        remote_ips: [192.168.56.101, 192.168.56.105] 
+      - local_ip: 10.101.102.2
+        remote_ips: [10.101.103.2, 10.101.104.2]
+   vpls:
+      - vid: 101
+        vni: 101102
+        peers: [192.168.56.101] 
+        ip: 10.101.102.2/24 
+      - vid: 105 
+        vni: 102105
+        peers: [192.168.56.105] 
+        ip: 10.102.105.1/24
+      #- vid: 200
+      #  vni: 200102 
+      #  peers: [192.168.56.200]
+      #  ip: 10.200.102.2/24
+      - vid: 1023
+        vni: 10231032
+        peers: [10.101.103.2]
+        ip: 172.16.23.2/24
+      - vid: 1024
+        vni: 10421024
+        peers: [10.101.104.2]
+        ip: 172.16.24.2/24
+
+# PE router
+openwrt3:
+   bridges:
+      ovs_bridges: enabled
+   vxlan:
+      - local_ip: <local_ip>
+        #remote_ips: [192.168.56.101, 192.168.56.106, 192.168.56.200] 
+        remote_ips: [192.168.56.101, 192.168.56.106] 
+      - local_ip: 10.101.103.2 
+        remote_ips: [10.101.102.2, 10.101.104.2]
+   vpls:
+      - vid: 101
+        vni: 101103
+        peers: [192.168.56.101] 
+        ip: 10.101.103.2/24 
+      - vid: 103
+        vni: 103106 
+        peers: [192.168.56.106] 
+        ip: 10.103.106.1/24
+      #- vid: 200 
+      #  vni: 200103
+      #  peers: [192.168.56.200]
+      #  ip: 10.200.103.2/24
+      - vid: 1032
+        vni: 10231032
+        peers: [10.101.102.2]
+        ip: 172.16.23.3/24
+      - vid: 1034
+        vni: 10341043
+        peers: [10.101.104.2]
+        ip: 172.16.34.3/24
+
+# PE router
+openwrt4:
+   bridges:
+      ovs_bridges: enabled
+   vxlan:
+      - local_ip: <local_ip>
+        #remote_ips: [192.168.56.101, 192.168.56.107, 192.168.56.200] 
+        remote_ips: [192.168.56.101, 192.168.56.107] 
+      - local_ip: 10.101.104.2 
+        remote_ips: [10.101.102.2, 10.101.103.2]
+   vpls:
+      - vid: 101 
+        vni: 101104
+        peers: [192.168.56.101] 
+        ip: 10.101.104.2/24 
+      - vid: 107 
+        vni: 104107 
+        peers: [192.168.56.107] 
+        ip: 10.104.107.1/24
+      #- vid: 200
+      #  vni: 200104
+      #  peers: [192.168.56.200]
+      #  ip: 10.200.104.2/24
+      - vid: 1043
+        vni: 10341043
+        peers: [10.101.103.2]
+        ip: 172.16.34.4/24
+      - vid: 1042
+        vni: 10421024
+        peers: [10.101.102.2]
+        ip: 172.16.24.4/24
+
+# Route Refrector
+master:
+   bridges:
+      ovs_bridges: enabled
+   vxlan:
+      - local_ip: <local_ip>
+        #remote_ips: [192.168.56.101, 192.168.56.102, 192.168.56.103, 192.168.56.104] 
+        remote_ips: [192.168.56.101] 
+   vpls:
+      - vid: 101
+        vni: 200101 
+        peers: [192.168.56.101] 
+        ip: 10.200.101.1/24 
+      #- vid: 102 
+      #  vni: 200102 
+      #  peers: [192.168.56.102] 
+      #  ip: 10.200.102.1/24
+      #- vid: 103 
+      #  vni: 200103 
+      #  peers: [192.168.56.103]
+      #  ip: 10.200.103.1/24
+      #- vid: 104
+      #  vni: 200104
+      #  peers: [192.168.56.104]
+      #  ip: 10.200.104.1/24
+
+# CE router
+openwrt5:
+   bridges:
+      ovs_bridges: enabled
+   vxlan:
+      - local_ip: <local_ip>
+        remote_ips: [192.168.56.102] 
+   vpls:
+      - vid: 102 
+        vni: 102105
+        peers: [192.168.56.102] 
+        ip: 10.102.105.2/24 
+   vhosts:
+      - network: 172.20.105.0/24
+        vhosts: 2
+      - network: 172.21.105.0/24
+        vhosts: 2
+
+# CE router
+openwrt6:
+   bridges:
+      ovs_bridges: enabled
+   vxlan:
+      - local_ip: <local_ip>
+        remote_ips: [192.168.56.103] 
+   vpls:
+      - vid: 103 
+        vni: 103106
+        peers: [192.168.56.103] 
+        ip: 10.103.106.2/24 
+   vhosts:
+      - network: 172.20.106.0/24
+        vhosts: 2
+      - network: 172.21.106.0/24
+        vhosts: 2
+
+# CE router
+openwrt7:
+   bridges:
+      ovs_bridges: enabled
+   vxlan:
+      - local_ip: <local_ip>
+        remote_ips: [192.168.56.104] 
+   vpls:
+      - vid: 104 
+        vni: 104107
+        peers: [192.168.56.104] 
+        ip: 10.104.107.2/24 
+   vhosts:
+      - network: 172.20.107.0/24
+        vhosts: 2
+      - network: 172.21.107.0/24
+        vhosts: 2
+

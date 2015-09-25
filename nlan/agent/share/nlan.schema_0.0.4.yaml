@@ -1,0 +1,141 @@
+# 2014/4/18
+# NLAN Schema in YAML
+# 2014/5/27, NLAN schema with _patterns
+#
+NLAN:
+    columns:
+      bridges:
+        type:
+          key: {refTable: NLAN_Bridges, type: uuid}
+          min: 0
+          max: 1
+      services:
+        type:
+          key: {refTable: NLAN_Service, type: uuid}
+          min: 0
+          max: unlimited
+      gateway:
+        type:
+          key: {refTable: NLAN_Gateway, type: uuid}
+          min: 0
+          max: 1
+      vxlan:
+        type:
+          key: {refTable: NLAN_VXLAN, type: uuid}
+          min: 0
+          max: 1
+      subnets:
+        type:
+          key: {refTable: NLAN_Subnet, type: uuid}
+          min: 0
+          max: unlimited
+    isRoot: true
+    maxRows: 1
+NLAN_Bridges:
+    columns:
+      controller: 
+        type:
+          key: {type: string, _pattern: ofc_address}
+          min: 0
+          max: 1
+          _description: "IP address of an OpenFlow Controller"
+      ovs_bridges:
+        type:
+          key: {type: string, enum: enabled}
+          min: 0
+          max: 1
+          _description: "Virtual bridges: br-int and br-tun"
+    maxRows: 1
+NLAN_Service:
+    columns:
+      chain:
+        type:
+          key: {type: string}
+          min: 0
+          max: unlimited
+          _description: "Logical network interfaces to which the Network Function is attached"
+      name:
+        type:
+          key: {type: string}
+          min: 1
+          max: 1
+          _description: "Name of the network function"
+    indexes:
+    - [name]
+NLAN_Gateway:
+    columns:
+      network:
+         type:
+           key: {type: string}
+           min: 0
+           max: 1
+           _description: "Network interface to which routing info is advertised"
+      rip: 
+         type:
+           key: {type: string, enum: enabled}
+           min: 0
+           max: 1
+           _description: "Quagga/Zebra RIP daemon"
+    maxRows: 1
+NLAN_VXLAN:
+    columns:
+      local_ip:
+        type:
+          key: {type: string, _pattern: ipv4_address}
+          min: 0
+          max: 1
+          _description: "IP address of the local host"
+      remote_ips:
+        type:
+          key: {type: string, _pattern: ipv4_address}
+          min: 0
+          max: unlimited
+          _description: "IP addresses of the remote hosts"
+    maxRows: 1
+NLAN_Subnet:
+    columns:
+      vni: 
+        type:
+          key: {type: integer, minInteger: 0, maxInteger: 16777215}
+          min: 1
+          max: 1
+          _description: "Virtual network identifier"
+      vid:
+        type:
+          key: {type: integer, minInteger: 0, maxInteger: 4095}
+          min: 0
+          max: 1
+          _description: "VLAN ID"
+      ip_dvr:
+        type:
+          key: {type: string, enum: [set, [addr, mode, dhcp]]}
+          value: {type: string, _pattern: {addr: ipv4_prefix, mode: dvr_mode, dhcp: string}}
+          min: 0
+          max: 3
+          _description: "Distributed Virtual Router setting"
+      ip_vhost:
+        type:
+          key: {type: string, _pattern: ipv4_prefix}
+          min: 0
+          max: 1
+          _description: "Virtual host in a linux network namespace"
+      default_gw:
+        type:
+          key: {type: string, _pattern: ipv4_address}
+          min: 0
+          max: 1
+          _description: "Default GW address for this subnet"
+      ports:
+        type:
+          key: {type: string}
+          min: 0
+          max: unlimited
+          _description: "Physical/logical ports attached to this subnet"
+      peers:
+        type:
+          key: {type: string, _pattern: ipv4_address}
+          min: 0
+          max: unlimited
+          _description: "Broadcast/Multicast trees for this subnet: IP addresses of the peer hosts"
+    indexes:
+    - [vni]

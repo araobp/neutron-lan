@@ -1,0 +1,114 @@
+#!template.dvsdvr
+
+openwrt1:
+   bridges: 
+      ovs_bridges: enabled
+   gateway:
+     rip: enabled
+#     network: eth0.2
+     network: eth2 
+   vxlan:
+      - local_ip: <local_ip> 
+        remote_ips: <remote_ips>
+   subnets:
+      - vid: 1
+        vni: 101
+        ip_dvr:
+            addr: '10.0.1.1/24'
+            mode: dvr 
+        ip_vhost: '10.0.1.101/24'
+#       ports:
+#          - eth0.1 
+#          - veth0.1
+        peers: <peers> 
+      - vid: 3
+        vni: 103
+        ip_dvr:
+            addr: '10.0.3.1/24'
+            mode: dvr 
+        ip_vhost: '10.0.3.101/24'
+#       ports:
+#          - eth0.3
+#          - veth0.3
+        peers: <peers>
+      - vid: 2
+        vni: 1
+        ip_dvr: 
+            addr: '192.168.100.1/24'
+            mode: dvr
+        ip_vhost: '192.168.100.101/24'
+        peers: <peers> 
+
+openwrt2:
+   bridges: 
+      ovs_bridges: enabled
+   vxlan:
+      - local_ip: <local_ip> 
+        remote_ips: <remote_ips>
+   subnets:
+      - vid: 1
+        vni: 101
+        ip_dvr: 
+            addr: '10.0.1.1/24'
+            mode: dvr
+        ip_vhost: '10.0.1.102/24'
+#       ports:
+#          - eth0.1
+#          - veth0.1
+        peers: <peers>
+      - vid: 3
+        vni: 103
+        ip_dvr:
+            addr: '10.0.3.1/24'
+            mode: dvr
+        ip_vhost: '10.0.3.102/24'
+#       ports:
+#          - eth0.3
+#          - veth0.3
+        peers: <peers>
+      - vid: 2
+        vni: 1
+        ip_dvr:
+            addr: '192.168.100.2/24'
+            mode: dvr
+        default_gw: '192.168.100.1'
+        ip_vhost: '192.168.100.102/24'
+        peers: <peers> 
+
+
+openwrt3:
+   bridges:
+     ovs_bridges: enabled
+   vxlan:
+     - local_ip: <local_ip> 
+       remote_ips: <remote_ips>
+   subnets:
+      - vid: 1
+        vni: 101
+        ip_dvr:
+            addr: '10.0.1.1/24'
+            mode: dvr
+        ip_vhost: '10.0.1.103/24'
+#       ports:
+#          - eth0.1
+#          - veth0.1
+        peers: <peers>
+      - vid: 3
+        vni: 103
+        ip_dvr:
+            addr: '10.0.3.1/24'
+            mode: dvr
+        ip_vhost: '10.0.3.103/24'
+#       ports:
+#          - eth0.3
+#          - veth0.3
+        peers: <peers>
+      - vid: 2
+        vni: 1
+        ip_dvr:
+            addr: '192.168.100.3/24'
+            mode: dvr
+        default_gw: '192.168.100.1'
+        ip_vhost: '192.168.100.103/24'
+        peers: <peers> 
+

@@ -1,0 +1,53 @@
+NLAN Request/Response over SSH session
+--------------------------------------
+
+	nlan.py                             nlan_agent.py
+			command options
+		      - - - - - - - - - ->
+			   STDIN
+		      >>>>>>>>>>>>>>>>>>>>
+
+			   STDOUT
+		      <<<<<<<<<<<<<<<<<<<< <-- cmd stdout \n\n
+			   STDERR
+		      <<<<<<<<<<<<<<<<<<<< <-- cmd stdout \n NLAN Response object (OrderedDict) \n\n
+
+		      <- - - - - - - - - -
+			 exit code
+
+	exit code
+	0: success
+	1: error
+
+Job management
+--------------
+<pre>
+    Parallel SSH sessions
+
+    nlan.py
+    subprocesses
+    [SSHClient] ======================== [openwrt1's sshd] - [nlan_agent.py] - [NLAN modules]
+    [SSHClient] ======================== [openwrt2's sshd] - [nlan_agent.py] - [NLAN modules]
+    [SSHClient] ======================== [openwrt3's sshd] - [nlan_agent.py] - [NLAN modules]
+    [SSHClient] ======================== [rpi1's sshd] - [nlan_agent.py] - [NLAN modules]
+
+</pre>
+Every transaction over SSH session gets a response (OrderedDict) from the coressponding router when it has just been finished.
+
+Each response is put in a queue.
+
+When all the transactions have just been finished, all the responses in the queue are examined. If the result is succesful, the summary output shows a smiley for the transaction. If the result is failed, it shows XXX instead:
+<pre>
+=+=+= Transaction Summary =+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+
+Start Time: 2014-04-22 23:54:42.317560
+
+Router           Result    Elapsed Time
+---------------------------------------
+openwrt1          :-)         0.92(sec)
+rpi1              :-)         0.97(sec)
+openwrt3          :-)         0.98(sec)
+openwrt2          :-)         1.02(sec)
+</pre>
+
+    

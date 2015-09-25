@@ -1,0 +1,27 @@
+1. Dependencies
+
+$ pip install layered-yaml-attrdict-config
+$ pip install datadiff
+
+2. Working with a local git repository
+
+At first, create a local git repo:
+
+$ git init
+
+Create a file 'test.yaml" and write some YAML data in it.
+
+$ cp dvsdvr.yaml test.yaml
+$ git add test.yaml
+$ git commit
+
+Then modify the YAML file and try this:
+
+$ git diff
+
+Make sure that the diff output matches what you have modified.
+
+$ python ./yamldiff.py test.yaml
+
+Make sure that the output shows CRUD operations correctly.
+

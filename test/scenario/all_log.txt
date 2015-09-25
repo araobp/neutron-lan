@@ -1,0 +1,436 @@
+///// TEST: copy the latest modules to the targets /////////////////////////////
+///// TEST: initialization /////////////////////////////////////////////////////
+///// TEST: add, if _controller and not _ovs_bridges_ (failure) ////////////////
+--- RESPONSE from router:openwrt1,platform:openwrt
+exception: ModelError
+message: cannot add _controller w/o _ovs_bridges_
+traceback: Traceback (most recent call last):
+  File "/opt/nlan/nlan_agent.py", line 101, in _route
+    call(m)
+  File "/opt/nlan/config/bridges.py", line 52, in add
+    raise ModelError(message='cannot add _controller w/o _ovs_bridges_', model=model.model)
+ModelError: cannot add _controller w/o _ovs_bridges_
+model: {'controller': '192.168.1.1:6633'}
+
+exit: 1
+operation: add
+progress: OrderedDict([('bridges', False)])
+****************
+*** SUCCESS! ***
+****************
+///// TEST: add, _ovs_bridges and not _controller //////////////////////////////
+--- STDOUT from router:openwrt1,platform:openwrt
+[INFO] 2014-05-19 01:41:23,014 module:nlan_agent,function:<module>,router:openwrt1
+NLAN Agent initialization completed
+[DEBUG] 2014-05-19 01:41:23,016 module:nlan_agent,function:<module>,router:openwrt1
+__n__: {'tables': {'services': {'max': 'unlimited', 'key': {'type': 'uuid', 'refTable': 'NLAN_Service'}, 'min': 0}, 'bridges': {'max': 1, 'key': {'type': 'uuid', 'refTable': 'NLAN_Bridges'}, 'min': 0}, 'gateway': {'max': 1, 'key': {'type': 'uuid', 'refTable': 'NLAN_Gateway'}, 'min': 0}, 'vxlan': {'max': 1, 'key': {'type': 'uuid', 'refTable': 'NLAN_VXLAN'}, 'min': 0}, 'subnets': {'max': 'unlimited', 'key': {'type': 'uuid', 'refTable': 'NLAN_Subnet'}, 'min': 0}}, 'agent_dir': '/opt/nlan', 'platform': 'openwrt', 'share_dir': '/opt/nlan/share', 'state_order': ['bridges', 'services', 'gateway', 'vxlan', 'subnets'], 'logger': <logging.Logger object at 0xb75c696c>, 'router': 'openwrt1', 'schema': 'ovsdb_nlan.schema', 'types': {'services': {'name': {'max': 1, 'key': {'type': 'string'}, 'min': 1}, 'chain': {'max': 'unlimited', 'key': {'type': 'string'}, 'min': 0}}, 'bridges': {'controller': {'max': 1, 'key': {'type': 'string'}, 'min': 0}, 'ovs_bridges': {'max': 1, 'key': {'enum': ['set', ['enabled']], 'type': 'string'}, 'min': 0}}, 'gateway': {'network': {'max': 1, 'key': {'type': 'string'}, 'min': 0}, 'rip': {'max': 1, 'key': {'type': 'string'}, 'min': 0}}, 'vxlan': {'remote_ips': {'max': 'unlimited', 'key': {'type': 'string'}, 'min': 0}, 'local_ip': {'max': 1, 'key': {'type': 'string'}, 'min': 0}}, 'subnets': {'peers': {'max': 'unlimited', 'key': {'type': 'string'}, 'min': 0}, 'vid': {'max': 1, 'key': {'minInteger': 0, 'maxInteger': 4095, 'type': 'integer'}, 'min': 0}, 'ip_vhost': {'max': 1, 'key': {'type': 'string'}, 'min': 0}, 'vni': {'max': 1, 'key': {'minInteger': 0, 'maxInteger': 16777215, 'type': 'integer'}, 'min': 1}, 'ip_dvr': {'max': 2, 'value': {'type': 'string'}, 'key': {'enum': ['set', ['addr', 'mode']], 'type': 'string'}, 'min': 0}, 'default_gw': {'max': 1, 'key': {'type': 'string'}, 'min': 0}, 'ports': {'max': 'unlimited', 'key': {'type': 'string'}, 'min': 0}}}, 'indexes': {'services': 'name', 'subnets': 'vni'}}
+[INFO] 2014-05-19 01:41:23,121 module:nlan_agent,function:_route,router:openwrt1
+function:bridges.add, model:{'ovs_bridges': 'enabled'}
+[DEBUG] 2014-05-19 01:41:23,132 module:ovsdb,function:_send,router:openwrt1
+request:
+  id: 999963
+  method: transact
+  params:
+  - Open_vSwitch
+  - op: select
+    table: NLAN
+    where: []
+response:
+  error: null
+  id: 999963
+  result:
+  - rows:
+    - _uuid:
+      - uuid
+      - 68a1b04b-0355-415e-aa6e-579826648669
+      _version:
+      - uuid
+      - 5a547165-e60a-4bb8-aa7e-b7df4da8cee8
+      bridges:
+      - set
+      - []
+      gateway:
+      - set
+      - []
+      services:
+      - set
+      - []
+      subnets:
+      - set
+      - []
+      vxlan:
+      - set
+      - []
+[DEBUG] 2014-05-19 01:41:23,137 module:ovsdb,function:_send,router:openwrt1
+request:
+  id: 111178
+  method: transact
+  params:
+  - Open_vSwitch
+  - op: insert
+    row: {}
+    table: NLAN
+response:
+  error: null
+  id: 111178
+  result:
+  - uuid:
+    - uuid
+    - 28f96740-c67e-4cb8-b010-9f3c319659a2
+  - details: transaction causes "NLAN" table to contain 2 rows, greater than the schema-defined
+      limit of 1 row(s)
+    error: constraint violation
+[DEBUG] 2014-05-19 01:41:23,141 module:ovsdb,function:_send,router:openwrt1
+request:
+  id: 676322
+  method: transact
+  params:
+  - Open_vSwitch
+  - op: select
+    table: NLAN_Bridges
+    where: []
+response:
+  error: null
+  id: 676322
+  result:
+  - rows: []
+[INFO] 2014-05-19 01:41:23,142 module:bridges,function:add,router:openwrt1
+Adding bridges: br-int and br-tun
+[DEBUG] 2014-05-19 01:41:23,165 module:cmdutil,function:_cmd2,router:openwrt1
+cmd: ovs-vsctl add-br br-int
+[DEBUG] 2014-05-19 01:41:23,187 module:cmdutil,function:_cmd2,router:openwrt1
+cmd: ovs-vsctl add-br br-tun
+[DEBUG] 2014-05-19 01:41:23,224 module:cmdutil,function:_cmd2,router:openwrt1
+cmd: ovs-ofctl del-flows br-tun
+[DEBUG] 2014-05-19 01:41:23,241 module:cmdutil,function:_cmd2,router:openwrt1
+cmd: ovs-vsctl add-port br-int patch-int -- set interface patch-int type=patch options:peer=patch-tun
+[DEBUG] 2014-05-19 01:41:23,263 module:cmdutil,function:_cmd2,router:openwrt1
+cmd: ovs-vsctl add-port br-tun patch-tun -- set interface patch-tun type=patch options:peer=patch-int
+[DEBUG] 2014-05-19 01:41:23,284 module:ovsdb,function:_send,router:openwrt1
+request:
+  id: 217474
+  method: transact
+  params:
+  - Open_vSwitch
+  - op: select
+    table: Interface
+    where:
+    - - name
+      - ==
+      - patch-tun
+response:
+  error: null
+  id: 217474
+  result:
+  - rows:
+    - _uuid:
+      - uuid
+      - 52a15351-29f9-4191-bb92-b44c948433a4
+      _version:
+      - uuid
+      - bc47d69e-95e9-41a5-95ae-254f4d1c82df
+      admin_state:
+      - set
+      - []
+      bfd:
+      - map
+      - []
+      bfd_status:
+      - map
+      - []
+      cfm_fault:
+      - set
+      - []
+      cfm_fault_status:
+      - set
+      - []
+      cfm_flap_count:
+      - set
+      - []
+      cfm_health:
+      - set
+      - []
+      cfm_mpid:
+      - set
+      - []
+      cfm_remote_mpids:
+      - set
+      - []
+      cfm_remote_opstate:
+      - set
+      - []
+      duplex:
+      - set
+      - []
+      external_ids:
+      - map
+      - []
+      ifindex: 0
+      ingress_policing_burst: 0
+      ingress_policing_rate: 0
+      lacp_current:
+      - set
+      - []
+      link_resets:
+      - set
+      - []
+      link_speed:
+      - set
+      - []
+      link_state:
+      - set
+      - []
+      mac:
+      - set
+      - []
+      mac_in_use: 3e:9f:f5:e4:34:82
+      mtu:
+      - set
+      - []
+      name: patch-tun
+      ofport: 1
+      ofport_request:
+      - set
+      - []
+      options:
+      - map
+      - - - peer
+          - patch-int
+      other_config:
+      - map
+      - []
+      statistics:
+      - map
+      - - - collisions
+          - 0
+        - - rx_bytes
+          - 0
+        - - rx_crc_err
+          - 0
+        - - rx_dropped
+          - 0
+        - - rx_errors
+          - 0
+        - - rx_frame_err
+          - 0
+        - - rx_over_err
+          - 0
+        - - rx_packets
+          - 0
+        - - tx_bytes
+          - 0
+        - - tx_dropped
+          - 0
+        - - tx_errors
+          - 0
+        - - tx_packets
+          - 0
+      status:
+      - map
+      - []
+      type: patch
+[DEBUG] 2014-05-19 01:41:23,301 module:cmdutil,function:_cmd2,router:openwrt1
+cmd: ovs-ofctl add-flow br-tun table=0,priority=1,in_port=1,actions=resubmit(,1)
+[DEBUG] 2014-05-19 01:41:23,309 module:cmdutil,function:_cmd2,router:openwrt1
+cmd: ovs-ofctl add-flow br-tun table=0,priority=0,actions=drop
+[DEBUG] 2014-05-19 01:41:23,318 module:cmdutil,function:_cmd2,router:openwrt1
+cmd: ovs-ofctl add-flow br-tun table=1,priority=0,dl_dst=01:00:00:00:00:00/01:00:00:00:00:00,actions=resubmit(,19)
+[DEBUG] 2014-05-19 01:41:23,328 module:cmdutil,function:_cmd2,router:openwrt1
+cmd: ovs-ofctl add-flow br-tun table=1,priority=0,dl_dst=00:00:00:00:00:00/01:00:00:00:00:00,actions=resubmit(,20)
+[DEBUG] 2014-05-19 01:41:23,338 module:cmdutil,function:_cmd2,router:openwrt1
+cmd: ovs-ofctl add-flow br-tun table=2,priority=0,actions=drop
+[DEBUG] 2014-05-19 01:41:23,348 module:cmdutil,function:_cmd2,router:openwrt1
+cmd: ovs-ofctl add-flow br-tun table=3,priority=0,actions=drop
+[DEBUG] 2014-05-19 01:41:23,357 module:cmdutil,function:_cmd2,router:openwrt1
+cmd: ovs-ofctl add-flow br-tun table=10,priority=1,actions=learn(table=20,hard_timeout=300,priority=1,NXM_OF_VLAN_TCI[0..11],NXM_OF_ETH_DST[]=NXM_OF_ETH_SRC[],load:0->NXM_OF_VLAN_TCI[],load:NXM_NX_TUN_ID[]->NXM_NX_TUN_ID[],output:NXM_OF_IN_PORT[]),output:1
+[DEBUG] 2014-05-19 01:41:23,365 module:cmdutil,function:_cmd2,router:openwrt1
+cmd: ovs-ofctl add-flow br-tun table=19,priority=0,actions=resubmit(,21)
+[DEBUG] 2014-05-19 01:41:23,373 module:cmdutil,function:_cmd2,router:openwrt1
+cmd: ovs-ofctl add-flow br-tun table=20,priority=0,actions=resubmit(,21)
+[DEBUG] 2014-05-19 01:41:23,382 module:cmdutil,function:_cmd2,router:openwrt1
+cmd: ovs-ofctl add-flow br-tun table=21,priority=0,actions=drop
+[DEBUG] 2014-05-19 01:41:23,391 module:ovsdb,function:crud,router:openwrt1
+CRUD operation (add): {'ovs_bridges': 'enabled'}
+[DEBUG] 2014-05-19 01:41:23,394 module:ovsdb,function:_send,router:openwrt1
+request:
+  id: 952143
+  method: transact
+  params:
+  - Open_vSwitch
+  - op: insert
+    row:
+      ovs_bridges: enabled
+    table: NLAN_Bridges
+    uuid-name: temp_432589
+  - mutations:
+    - - bridges
+      - insert
+      - - set
+        - - - named-uuid
+            - temp_432589
+    op: mutate
+    table: NLAN
+    where: []
+response:
+  error: null
+  id: 952143
+  result:
+  - uuid:
+    - uuid
+    - 7c8f5c76-4cc1-416b-aed2-f8097e6f9da5
+  - count: 1
+[DEBUG] 2014-05-19 01:41:23,398 module:ovsdb,function:_send,router:openwrt1
+request:
+  id: 426938
+  method: transact
+  params:
+  - Open_vSwitch
+  - op: select
+    table: NLAN_Bridges
+    where: []
+response:
+  error: null
+  id: 426938
+  result:
+  - rows:
+    - _uuid:
+      - uuid
+      - 7c8f5c76-4cc1-416b-aed2-f8097e6f9da5
+      _version:
+      - uuid
+      - fc401ae1-488b-4edf-97d2-a94fe3d48af5
+      controller:
+      - set
+      - []
+      ovs_bridges: enabled
+[INFO] 2014-05-19 01:41:23,403 module:nlan_agent,function:<module>,router:openwrt1
+NLAN Agent execution completed
+///// TEST: add, _ovs_bridges and not _controller (ovs-vsctl) //////////////////
+--- STDOUT from router:openwrt1,platform:openwrt
+d4f22fa4-2a1c-4609-9893-54182089c8f8
+    Bridge br-int
+        Port br-int
+            Interface br-int
+                type: internal
+        Port patch-int
+            Interface patch-int
+                type: patch
+                options: {peer=patch-tun}
+    Bridge br-tun
+        Port br-tun
+            Interface br-tun
+                type: internal
+        Port patch-tun
+            Interface patch-tun
+                type: patch
+                options: {peer=patch-int}
+///// TEST: add, _ovs_bridges and not _controller (ovs-ofctl) //////////////////
+--- STDOUT from router:openwrt1,platform:openwrt
+NXST_FLOW reply (xid=0x4):
+ cookie=0x0, duration=2s, table=0, n_packets=0, n_bytes=0, idle_age=2, priority=1,in_port=1 actions=resubmit(,1)
+ cookie=0x0, duration=1.991s, table=0, n_packets=0, n_bytes=0, idle_age=1, priority=0 actions=drop
+ cookie=0x0, duration=1.982s, table=1, n_packets=0, n_bytes=0, idle_age=1, priority=0,dl_dst=01:00:00:00:00:00/01:00:00:00:00:00 actions=resubmit(,19)
+ cookie=0x0, duration=1.971s, table=1, n_packets=0, n_bytes=0, idle_age=1, priority=0,dl_dst=00:00:00:00:00:00/01:00:00:00:00:00 actions=resubmit(,20)
+ cookie=0x0, duration=1.962s, table=2, n_packets=0, n_bytes=0, idle_age=1, priority=0 actions=drop
+ cookie=0x0, duration=1.953s, table=3, n_packets=0, n_bytes=0, idle_age=1, priority=0 actions=drop
+ cookie=0x0, duration=1.944s, table=10, n_packets=0, n_bytes=0, idle_age=1, priority=1 actions=learn(table=20,hard_timeout=300,priority=1,NXM_OF_VLAN_TCI[0..11],NXM_OF_ETH_DST[]=NXM_OF_ETH_SRC[],load:0->NXM_OF_VLAN_TCI[],load:NXM_NX_TUN_ID[]->NXM_NX_TUN_ID[],output:NXM_OF_IN_PORT[]),output:1
+ cookie=0x0, duration=1.936s, table=19, n_packets=0, n_bytes=0, idle_age=1, priority=0 actions=resubmit(,21)
+ cookie=0x0, duration=1.927s, table=20, n_packets=0, n_bytes=0, idle_age=1, priority=0 actions=resubmit(,21)
+ cookie=0x0, duration=1.918s, table=21, n_packets=0, n_bytes=0, idle_age=1, priority=0 actions=drop
+///// TEST: add, _ovs_bridges and not _controller (ovsdb) //////////////////////
+--- STDOUT from router:openwrt1,platform:openwrt
+bridges:
+  ovs_bridges: enabled
+****************
+*** SUCCESS! ***
+****************
+///// TEST: add, _controller and _ovs_bridges_ /////////////////////////////////
+///// TEST: add, _controller and _ovs_bridges_ (ovs-vsctl) /////////////////////
+--- STDOUT from router:openwrt1,platform:openwrt
+d4f22fa4-2a1c-4609-9893-54182089c8f8
+    Bridge br-int
+        Port br-int
+            Interface br-int
+                type: internal
+        Port patch-int
+            Interface patch-int
+                type: patch
+                options: {peer=patch-tun}
+    Bridge br-tun
+        Controller "tcp:192.168.1.1:6633"
+        Port br-tun
+            Interface br-tun
+                type: internal
+        Port patch-tun
+            Interface patch-tun
+                type: patch
+                options: {peer=patch-int}
+///// TEST: add, _controller and _ovs_bridges_ (ovs-ofctl) /////////////////////
+--- STDOUT from router:openwrt1,platform:openwrt
+NXST_FLOW reply (xid=0x4):
+///// TEST: add, _controller and _ovs_bridges_ (ovsdb) /////////////////////////
+--- STDOUT from router:openwrt1,platform:openwrt
+bridges:
+  controller: 192.168.1.1:6633
+  ovs_bridges: enabled
+****************
+*** SUCCESS! ***
+****************
+///// TEST: delete, _controller and not _ovs_bridges ///////////////////////////
+///// TEST: delete, _controller and not _ovs_bridges (ovs-vsctl) ///////////////
+--- STDOUT from router:openwrt1,platform:openwrt
+d4f22fa4-2a1c-4609-9893-54182089c8f8
+    Bridge br-int
+        Port br-int
+            Interface br-int
+                type: internal
+        Port patch-int
+            Interface patch-int
+                type: patch
+                options: {peer=patch-tun}
+    Bridge br-tun
+        Port br-tun
+            Interface br-tun
+                type: internal
+        Port patch-tun
+            Interface patch-tun
+                type: patch
+                options: {peer=patch-int}
+///// TEST: delete, _controller and not _ovs_bridges (ovs-ofctl) ///////////////
+--- STDOUT from router:openwrt1,platform:openwrt
+NXST_FLOW reply (xid=0x4):
+ cookie=0x0, duration=2.033s, table=0, n_packets=0, n_bytes=0, idle_age=2, priority=1,in_port=1 actions=resubmit(,1)
+ cookie=0x0, duration=2.024s, table=0, n_packets=0, n_bytes=0, idle_age=2, priority=0 actions=drop
+ cookie=0x0, duration=2.015s, table=1, n_packets=0, n_bytes=0, idle_age=2, priority=0,dl_dst=01:00:00:00:00:00/01:00:00:00:00:00 actions=resubmit(,19)
+ cookie=0x0, duration=2.006s, table=1, n_packets=0, n_bytes=0, idle_age=2, priority=0,dl_dst=00:00:00:00:00:00/01:00:00:00:00:00 actions=resubmit(,20)
+ cookie=0x0, duration=1.998s, table=2, n_packets=0, n_bytes=0, idle_age=1, priority=0 actions=drop
+ cookie=0x0, duration=1.985s, table=3, n_packets=0, n_bytes=0, idle_age=1, priority=0 actions=drop
+ cookie=0x0, duration=1.975s, table=10, n_packets=0, n_bytes=0, idle_age=1, priority=1 actions=learn(table=20,hard_timeout=300,priority=1,NXM_OF_VLAN_TCI[0..11],NXM_OF_ETH_DST[]=NXM_OF_ETH_SRC[],load:0->NXM_OF_VLAN_TCI[],load:NXM_NX_TUN_ID[]->NXM_NX_TUN_ID[],output:NXM_OF_IN_PORT[]),output:1
+ cookie=0x0, duration=1.964s, table=19, n_packets=0, n_bytes=0, idle_age=1, priority=0 actions=resubmit(,21)
+ cookie=0x0, duration=1.952s, table=20, n_packets=0, n_bytes=0, idle_age=1, priority=0 actions=resubmit(,21)
+ cookie=0x0, duration=1.943s, table=21, n_packets=0, n_bytes=0, idle_age=1, priority=0 actions=drop
+///// TEST: delete, _controller and not _ovs_bridges (ovsdb) ///////////////////
+--- STDOUT from router:openwrt1,platform:openwrt
+bridges:
+  ovs_bridges: enabled
+****************
+*** SUCCESS! ***
+****************
+///// TEST: delete, _ovs_bridges ///////////////////////////////////////////////
+///// TEST: delete, _ovs_bridges (ovs-vsctl) ///////////////////////////////////
+--- STDOUT from router:openwrt1,platform:openwrt
+d4f22fa4-2a1c-4609-9893-54182089c8f8
+///// TEST: delete, _ovs_bridges (ovsdb) ///////////////////////////////////////
+--- RESPONSE from router:openwrt1,platform:openwrt
+exception: Exception
+message: See the traceback message
+exit: 1
+traceback: Traceback (most recent call last):
+  File "/opt/nlan/nlan_agent.py", line 156, in _route
+    result = call(*args)
+  File "/opt/nlan/command/db.py", line 46, in state
+    return ovsdb.get_current_state()
+  File "/opt/nlan/ovsdb.py", line 707, in get_current_state
+    if len(d) > 0:
+TypeError: object of type 'NoneType' has no len()
+

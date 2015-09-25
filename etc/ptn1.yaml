@@ -1,0 +1,216 @@
+#!template.dvsdvr
+# Jul 2014
+# WAN simulation network 
+# This YAML config deploys Packet Transport Network simulating point-to-point
+# pseudo-wire connections. 
+
+# P router
+openwrt1:
+   ptn_nodes:
+      - id: wan 
+        nodes:
+          ptn: ptn101w
+          l2sw: l2sw101w
+   ptn_links:
+      - id: wan
+        local_ip: <local_ip>
+        remote_ips: [192.168.56.102, 192.168.56.103, 192.168.56.104, 192.168.56.200]
+   ptn_l2vpn:
+      - id: wan
+        vid: 102
+        vni: 101102
+        peers: [192.168.56.102] 
+        ip: 10.101.102.1/24 
+      - id: wan
+        vid: 103
+        vni: 101103
+        peers: [192.168.56.103] 
+        ip: 10.101.103.1/24 
+      - id: wan
+        vid: 104 
+        vni: 101104
+        peers: [192.168.56.104] 
+        ip: 10.101.104.1/24 
+      - id: wan
+        vid: 200
+        vni: 200101
+        peers: [192.168.56.200]
+        ip: 10.200.101.2/24
+
+# PE router
+openwrt2:
+   ptn_nodes:
+      - id: wan
+        nodes:
+          ptn: ptn102w
+          l2sw: l2sw102w
+      - id: access 
+        nodes:
+          ptn: ptn102a
+          l2sw: l2sw102a
+   ptn_links:
+      - id: wan
+        local_ip: <local_ip>
+        remote_ips: [192.168.56.101] 
+      - id: access 
+        local_ip: <local_ip>
+        remote_ips: [192.168.56.105] 
+   ptn_l2vpn:
+      - id: wan
+        vid: 101
+        vni: 101102
+        peers: [192.168.56.101] 
+        ip: 10.101.102.2/24 
+      - id: access 
+        vid: 105 
+        vni: 102105
+        peers: [192.168.56.105] 
+        ip: 10.102.105.1/24
+
+# PE router
+openwrt3:
+   ptn_nodes:
+      - id: wan
+        nodes:
+          ptn: ptn103w
+          l2sw: l2sw103w
+      - id: access 
+        nodes:
+          ptn: ptn103a
+          l2sw: l2sw103a
+   ptn_links:
+      - id: wan
+        local_ip: <local_ip>
+        remote_ips: [192.168.56.101] 
+      - id: access 
+        local_ip: <local_ip>
+        remote_ips: [192.168.56.106] 
+   ptn_l2vpn:
+      - id: wan
+        vid: 101
+        vni: 101103
+        peers: [192.168.56.101] 
+        ip: 10.101.103.2/24 
+      - id: access 
+        vid: 106 
+        vni: 103106
+        peers: [192.168.56.106] 
+        ip: 10.103.106.1/24
+
+# PE router
+openwrt4:
+   ptn_nodes:
+      - id: wan
+        nodes:
+          ptn: ptn103w
+          l2sw: l2sw103w
+      - id: access 
+        nodes:
+          ptn: ptn103a
+          l2sw: l2sw103a
+   ptn_links:
+      - id: wan
+        local_ip: <local_ip>
+        remote_ips: [192.168.56.101] 
+      - id: access 
+        local_ip: <local_ip>
+        remote_ips: [192.168.56.107] 
+   ptn_l2vpn:
+      - id: wan
+        vid: 101
+        vni: 101104
+        peers: [192.168.56.101] 
+        ip: 10.101.104.2/24 
+      - id: access 
+        vid: 107 
+        vni: 104107
+        peers: [192.168.56.107] 
+        ip: 10.104.107.1/24
+
+# Route Refrector
+master:
+   ptn_nodes:
+      - id: wan
+        nodes:
+          ptn: ptn200w
+          l2sw: l2sw200w
+   ptn_links:
+      - id: wan
+        local_ip: <local_ip>
+        remote_ips: [192.168.56.101] 
+   ptn_l2vpn:
+      - id: wan
+        vid: 101
+        vni: 200101 
+        peers: [192.168.56.101] 
+        ip: 10.200.101.1/24 
+
+# CE router
+openwrt5:
+   ptn_nodes:
+      - id: access
+        nodes:
+          ptn: ptn105a
+          l2sw: l2sw105a
+   ptn_links:
+      - id: access
+        local_ip: <local_ip>
+        remote_ips: [192.168.56.102] 
+   ptn_l2vpn:
+      - id: access
+        vid: 102 
+        vni: 102105
+        peers: [192.168.56.102] 
+        ip: 10.102.105.2/24 
+   vhosts:
+      - network: 172.20.105.1/24
+        vhosts: 2
+      - network: 172.21.105.1/24
+        vhosts: 2
+
+# CE router
+openwrt6:
+   ptn_nodes:
+     - id: access
+       nodes:
+         ptn: ptn106a
+         l2sw: l2sw106a
+   ptn_links:
+      - id: access 
+        local_ip: <local_ip>
+        remote_ips: [192.168.56.103] 
+   ptn_l2vpn:
+      - id: access 
+        vid: 103 
+        vni: 103106
+        peers: [192.168.56.103] 
+        ip: 10.103.106.2/24 
+   vhosts:
+      - network: 172.20.106.1/24
+        vhosts: 2
+      - network: 172.21.106.1/24
+        vhosts: 2
+
+# CE router
+openwrt7:
+   ptn_nodes:
+     - id: access
+       nodes:
+         ptn: ptn107a
+         l2sw: l2sw107a
+   ptn_links:
+      - id: access 
+        local_ip: <local_ip>
+        remote_ips: [192.168.56.104] 
+   ptn_l2vpn:
+      - id: access 
+        vid: 104 
+        vni: 104107
+        peers: [192.168.56.104] 
+        ip: 10.104.107.2/24 
+   vhosts:
+      - network: 172.20.107.1/24
+        vhosts: 2
+      - network: 172.21.107.1/24
+        vhosts: 2
+

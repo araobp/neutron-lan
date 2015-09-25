@@ -1,0 +1,69 @@
+#!template.dvsdvr
+# VXLAN-base VPLS simulation
+# Full-mesh topology (5 * 4 = 20 full-mesh pathes)
+
+openwrt1:
+   bridges:
+      ovs_bridges: enabled
+   vxlan:
+      - local_ip: <local_ip>
+        remote_ips: <remote_ips>
+   vpls:
+      - vid: 1
+        vni: 101
+        peers: <peers>
+      - vid: 3
+        vni: 103
+        peers: <peers>
+openwrt2:
+   bridges:
+      ovs_bridges: enabled
+   vxlan:
+      - local_ip: <local_ip>
+        remote_ips: <remote_ips>
+   vpls:
+      - vid: 1
+        vni: 101
+        peers: <peers>
+      - vid: 3
+        vni: 103
+        peers: <peers>
+openwrt3:
+   bridges:
+      ovs_bridges: enabled
+   vxlan:
+      - local_ip: <local_ip>
+        remote_ips: <remote_ips>
+   vpls:
+      - vid: 1
+        vni: 101
+        peers: <peers>
+      - vid: 3
+        vni: 103
+        peers: <peers>
+openwrt4:
+   bridges:
+      ovs_bridges: enabled
+   vxlan:
+      - local_ip: <local_ip>
+        remote_ips: <remote_ips>
+   vpls:
+      - vid: 1
+        vni: 101
+        peers: <peers>
+      - vid: 3
+        vni: 103
+        peers: <peers>
+master:
+   bridges:
+      ovs_bridges: enabled
+   vxlan:
+      - local_ip: <local_ip>
+        remote_ips: <remote_ips>
+   vpls:
+      - vid: 1
+        vni: 101
+        peers: <peers>
+      - vid: 3
+        vni: 103
+        peers: <peers>
