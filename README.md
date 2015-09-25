@@ -6,6 +6,7 @@ neutron-lan
 
 INDEX
 -----
+* [Slides](https://docs.google.com/presentation/d/1cAHGokqDmtH4qoJg7lWz2Hg0iefx8toigKe3x0xKHg0/pub?start=false&loop=false&delayms=3000)
 * [code](https://github.com/araobp/neutron-lan)
 * [Software Defined Networking](https://github.com/araobp/neutron-lan/blob/master/doc/software_defined_networking.md)
 * [YAML-based network modeling](https://github.com/araobp/neutron-lan/blob/master/doc/modeling.md)
