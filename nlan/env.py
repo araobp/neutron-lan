@@ -2,16 +2,19 @@
 # NLAN Environment 
 
 import os
+import os.path
 import yaml
 import nlan_schema
+
+ROOT = os.path.join(os.path.expanduser('~'), 'neutron-lan')
 
 ### NLAN-Master-related env ####################################### 
 
 # NLAN Master Home Directory (local)
-NLAN_DIR = '/root/neutron-lan/nlan'
+NLAN_DIR = os.path.join(ROOT, 'nlan')
 
 # NLAN etc directory (local)
-NLAN_ETC = '/root/neutron-lan/etc'
+NLAN_ETC = os.path.join(ROOT, 'etc')
 
 # NLAN rpc modules (local)
 NLAN_RPC_DIR = os.path.join(NLAN_DIR, 'agent/rpc')
