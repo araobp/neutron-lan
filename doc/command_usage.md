@@ -1,9 +1,7 @@
-NLAN Command Usage
-==================
+#NLAN Command Usage
 
-DevOps operations
------------------
-<pre>
+##DevOps operations
+```
 - copy NLAN Agent and NLAN modules to remote routers
 $ nlan.py -m
 
@@ -39,22 +37,20 @@ $ nlan.py -w 100
 
 - wait until all the routers on the roster become inaccessible (-w -<timeout>)
 $ nlan.py -w -50 
-</pre>
+```
 
-Working with a local Git repo
-------------------------------
-<pre>
+##Working with a local Git repo
+```
 - deploy a network service with a default state file (the state file is commited to the local git repo after the deployment)
 $ nlan.py -G deploy 
 
 - rollback to the previous state
 $ nlan.py init.run
 $ nlan.py -R deploy
-</pre>
+```
 
-CRUD operations (using nlan.py)
------------------------------------------
-<pre>
+##CRUD operations (using nlan.py)
+```
 print a list of modules
 $ nlan.py -s
 
@@ -72,11 +68,10 @@ $ nlan.py -t openwrt1 --delete subnets _index=10 ip_vhost=10.0.1.101/24
 $ nlan.py -t openwrt1 --get subnets _index=10 ip_dvr 
 $ nlan.py -t openwrt1 --get subnets _index=10
 $ nlan.py -t openwrt1 --get subnets
-</pre>
+```
 
-Local CRUD operations (w/o using nlan.py)
------------------------------------------
-<pre>
+##Local CRUD operations (w/o using nlan.py)
+```
 print a list of modules
 $ nlan_agent.py -s
 
@@ -94,25 +89,21 @@ $ nlan_agent.py --delete subnets _index=10 ip_vhost=10.0.1.101/24
 $ nlan_agent.py --get subnets _index=10 ip_dvr 
 $ nlan_agent.py --get subnets _index=10
 $ nlan_agent.py --get subnets
-</pre>
+```
 
-
-Scenario Runner
----------------
-<pre>
+##Scenario Runner
+```
 - execute a scenario (e.g., a scenario 'all.yaml')
 $ nlans.py all.yaml
-</pre>
+```
 
-MIME Multipart output
----------------------
-<pre>
+##MIME Multipart output
+```
 $ nlan.py --mime --debug --verbose <other options/arguments>
-</pre>
+```
 
-Maintenance
------------
-<pre>
+##Maintenance
+```
 - echo test
 $ nlan.py test.echo Hello World!
 
@@ -139,28 +130,28 @@ $ nlan.py -t openwrt1 db.state
 
 - show a specific NLAN row in OVSDB (e.g., subnets vni=101)
 $ nlan.py db.getrow subnets vni 101
-</pre>
 
+- clear NLAN states in all the routers (all reset)
+$ nlan.py init.run
+$ nlan.py system.reboot
+```
 
-NLAN schema update
-------------------
-<pre>
+##NLAN schema update
+```
 Update 'env.py' and 'schema.sh' at first. Then,
 $ schema.sh
 $ nlan -m
 $ nlan db.update 
 
 Do not forget to update env.py either.
-</pre>
+```
 
-
-Using NLAN REST APIs
---------------------
-<pre>
+##Using NLAN REST APIs
+```
 $ curl -s -H Content-Type:application/json -X POST http://192.168.56.101:8080/_ALL/rpc/test/echo?params=Hello!
 $ curl -s -H Content-Type:application/json -X OPTIONS http://192.168.56.101:8080?params=subnets
 $ curl -s -H Content-Type:application/json -X POST http://192.168.56.101:8080/openwrt1/rpc/init/run
 $ curl -s -H Content-Type:application/json -X POST http://192.168.56.101:8080/openwrt1/config/bridges?ovs_bridges=enabled
 $ curl -s -H Content-Type:application/json -X POST http://192.168.56.101:8080/openwrt1/config/vxlan?local_ip=192.168.1.101&remote_ips=192.168.1.102,192.168.56.103
-</pre>
+```
 
