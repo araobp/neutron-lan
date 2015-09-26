@@ -61,6 +61,8 @@ def get_path(string):
 def get_node_path(string):
     return string.split('=')[0]
 
+def get_value(string):
+    return loads(string.split('=')[1])
 
 # This class is used by template modules
 class Template:
