@@ -1,20 +1,26 @@
 openwrt1:
-   host: 192.168.56.101
-   user: root
-   passwd: root
-   platform: openwrt 
-
-openwrt2:
    host: 192.168.56.102
    user: root
    passwd: root
    platform: openwrt 
 
-openwrt3:
+openwrt2:
    host: 192.168.56.103
    user: root
    passwd: root
    platform: openwrt 
+
+openwrt3:
+   host: 192.168.56.104
+   user: root
+   passwd: root
+   platform: openwrt 
+
+rpi1:
+   host: 192.168.56.105
+   user: root
+   passwd: root
+   platform: rpi 
 
 #master:
 #   host: 192.168.56.200

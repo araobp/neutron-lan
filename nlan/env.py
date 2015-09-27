@@ -19,6 +19,9 @@ NLAN_ETC = os.path.join(ROOT, 'etc')
 # NLAN rpc modules (local)
 NLAN_RPC_DIR = os.path.join(NLAN_DIR, 'agent/rpc')
 
+# NLAN default roster file
+NLAN_ROSTER = 'roster.yaml'
+
 # NLAN default state file
 NLAN_STATE = 'state.yaml'
 
@@ -26,7 +29,7 @@ NLAN_STATE = 'state.yaml'
 NLAN_SCP_DIR = os.path.join(NLAN_DIR, 'agent') 
 
 # roster file (local)
-ROSTER_YAML = os.path.join(NLAN_ETC,'roster.yaml')
+ROSTER_YAML = os.path.join(NLAN_ETC, 'roster',  NLAN_ROSTER)
 _roster = {}
 with open(ROSTER_YAML, 'r') as f:
     _roster = yaml.load(f.read())
@@ -34,7 +37,7 @@ ROSTER = _roster
 
 # Git repo (local)
 GIT_DIR = '/root/neutron-lan/etc/.git' 
-WORK_TREE = NLAN_ETC 
+WORK_TREE = os.path.join(NLAN_ETC, 'state')
 GIT_OPTIONS = '--git-dir {} --work-tree {}'.format(GIT_DIR, WORK_TREE)
 
 

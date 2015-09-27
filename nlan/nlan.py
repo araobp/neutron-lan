@@ -563,7 +563,7 @@ if __name__=='__main__':
         elif not crud and not option and len(args) > 0 and args[0].endswith('yaml'): # Batch operation
             for v in args:
                 if v.endswith('yaml'):
-                    if os.path.exists(os.path.join(NLAN_ETC, v)):
+                    if os.path.exists(os.path.join(NLAN_ETC, 'state', v)):
                         cmd_list = yamldiff.crud_diff(v, git=git)
                         if len(cmd_list) != 0:
                             main(router=router, operation='--batch', cmd_list=cmd_list, loglevel=loglevel, verbose=verbose, mime=mime)
