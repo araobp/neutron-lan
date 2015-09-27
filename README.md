@@ -1,13 +1,14 @@
-neutron-lan
-===========
+#neutron-lan
 
 ![neutron-lan testbed](https://raw.github.com/araobp/neutron-lan/master/misc/neutron-lan-testbed.png)
 ![Raspberry Pi](https://raw.github.com/araobp/neutron-lan/master/misc/rpi.png)
 
-INDEX
------
+##DevOps tool 'nlan'
 * [Slides](https://docs.google.com/presentation/d/1cAHGokqDmtH4qoJg7lWz2Hg0iefx8toigKe3x0xKHg0/pub?start=false&loop=false&delayms=3000)
+* [Command usage](https://github.com/araobp/neutron-lan/blob/master/doc/command_usage.md)
 * [code](https://github.com/araobp/neutron-lan)
+
+##INDEX
 * [Software Defined Networking](https://github.com/araobp/neutron-lan/blob/master/doc/software_defined_networking.md)
 * [YAML-based network modeling](https://github.com/araobp/neutron-lan/blob/master/doc/modeling.md)
 * [OVSDB schema for neutron-lan](https://github.com/araobp/neutron-lan/blob/master/doc/ovsdb-schema.md)
@@ -20,16 +21,8 @@ INDEX
 * [Test bed at my home](https://github.com/araobp/neutron-lan/wiki/Testbed)
 * [SDN in the past(I used to be a Telephony guy)](https://github.com/araobp/neutron-lan/blob/master/doc/sdn_in_the_past.md)
 
-Home-made DevOps 'NLAN'
------------------------
-* [Command usage](https://github.com/araobp/neutron-lan/blob/master/doc/command_usage.md)
-* [SIT result](https://github.com/araobp/neutron-lan/blob/master/test/sit/sit_log.txt)
-* [SIT result(w/ INFO logging enabled)](https://github.com/araobp/neutron-lan/blob/master/test/sit/sit_info_log.txt)
-* [SIT result(w/ DEBUG logging enabled)](https://github.com/araobp/neutron-lan/blob/master/test/sit/sit_debug_log.txt)
 
-
-BACKGROUND AND MOTIVATION
--------------------------
+##BACKGROUND AND MOTIVATION
 
 This is my personal project to **study SDN(Software-Defined Networking)** by configuring a openstack-neutron-like network over OpenWRT routers at home (I call it "neturon-lan") and making some SDN-related experiments on the network.
 
@@ -39,8 +32,7 @@ I am also interested in the distributed virtual switch and distributed virtual r
 
 As for network service abstraction, there are a lot of SDN and DevOps platforms out there. However, I will develop a DevOps-like tool on my own because of the CPU and memory limitaions of OpenWRT routers.
 
-HOW VXLAN WORKS
----------------
+##HOW VXLAN WORKS
 
 **neutron-lan** is partly based on the OpenStack neutron networking architecture.
 
@@ -48,6 +40,7 @@ Neutron configures two kinds of bridges on each compute node and a network node:
 
 "br-int" is a normal mac-learning vswitch, whereas "br-tun" works as a GRE GW or VXLAN GW.
 
+```
        Port VLANs
           |  |
         [br-int] Integration bridge
@@ -61,9 +54,11 @@ Neutron configures two kinds of bridges on each compute node and a network node:
     [br-tun]  [br-tun]
        |         |
     [br-int]  [br-int]
+```
 
 In case of a network like this,
 
+```
       [br-int]
          | vlan trunk
          | port1
@@ -71,9 +66,11 @@ In case of a network like this,
        |   |
     vxlan vxlan
     port2 port3
+```
 
 flow entries on the "br-tun" are as follows(this is an actual dump from an OpenStack compute node):
 
+```
     root@compute1:~# ovs-ofctl dump-flows br-tun
     NXST_FLOW reply (xid=0x4):
      cookie=0x0, duration=9638.539s, table=0, n_packets=0, n_bytes=0, idle_age=9638, priority=1,in_port=3 actions=resubmit(,2)
@@ -89,11 +86,13 @@ flow entries on the "br-tun" are as follows(this is an actual dump from an OpenS
      cookie=0x0, duration=9641.545s, table=20, n_packets=0, n_bytes=0, idle_age=9641, priority=0 actions=resubmit(,21)
      cookie=0x0, duration=9636.651s, table=21, n_packets=10, n_bytes=1208, idle_age=1700, hard_age=9628, priority=1,dl_vlan=1 actions=strip_vlan,set_tunnel:0x3,output:3,output:2
      cookie=0x0, duration=9641.394s, table=21, n_packets=0, n_bytes=0, idle_age=9641, priority=0 actions=drop
+```
 
 Note that "tun_id=0x3" matches VXLAN VNI field and "set_tunnel:0x3" sets a value 0x3 to VNI, and "actions=learn(...)" is a openvswitch-specific extension to add flow entries for outgoing packets dynmaically by learning from incoming packets. So the config is rather static.
 
 The following is a tcpdump output. You can recognize that VNI 0x3 in it: find "0800 0000 0000 0300" in it and "0000 03" is VNI.
 
+```
     root@OpenWrt:~/bin# tcpdump -X -i eth2
     tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
     listening on eth2, link-type EN10MB (Ethernet), capture size 65535 bytes
@@ -128,10 +127,11 @@ The following is a tcpdump output. You can recognize that VNI 0x3 in it: find "0
                 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
                 |                VXLAN Network Identifier (VNI) |   Reserved    |
                 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-
+```
 
 You can manually add the entries to br-tun using ovs-ofctl command like this:
 
+```
     port 2: patch-tun, port3: vxlan1, port4:vxlan0
     $ ovs-ofctl del-flows br-tun
     $ ovs-ofctl add-flow br-tun "table=0,priority=1,in_port=4 ,actions=resubmit(,2)"
@@ -147,10 +147,9 @@ You can manually add the entries to br-tun using ovs-ofctl command like this:
     $ ovs-ofctl add-flow br-tun "table=20,priority=0,actions=resubmit(,21)"
     $ ovs-ofctl add-flow br-tun "table=21,priority=1,dl_vlan=1,actions=strip_vlan,set_tunnel:0x3,output:4,output:3"
     $ ovs-ofctl add-flow br-tun "table=21,priority=0,actions=drop"
+```
 
-
-Technology choice
------------------
+##Technology choice
 
 I thought of [OpenDaylight](https://wiki.opendaylight.org/view/Main_Page) as a platform for this project at first, but it's too heavy for such a small network, and the hardest thing for me is to write code in Java for ODL: too complex for me (Eclipse, OSGi, Maven, YANG...). However, it's service abstraction layer [MD-SAL](https://wiki.opendaylight.org/view/OpenDaylight_Controller:MD-SAL:Architecture) is quite interesting. It's sort of a perfect network abstraction mechanism...
 
@@ -162,7 +161,7 @@ I installed python-mini package on my router using opkg, and I found the storage
 
 As a reference, I looked into [SaltStack](http://www.saltstack.com/). Although it seemed quite interesting, OpenWRT does not support salt-minion and it's state management mechanism seems to me a bit strange from a network management standpoint, so I have decided to develop a tool like salt, salt-ssh and salt-minion on my own.
 
-<pre>
+```
       [Tool A]  [Tool B]  [Tool C]...
           |         |        |
     +-----------------------------------------------------+
@@ -175,10 +174,9 @@ As a reference, I looked into [SaltStack](http://www.saltstack.com/). Although i
                   |
         [Agents w/ minimal capabilities]]]
     
-</pre>
+```
 
-MTU issue
----------
+##MTU issue
 
 Since the VXLAN overhead is 50 bytes, you need to adjust path MTU on each end host in some way.
 
@@ -189,13 +187,12 @@ I would chose the latter option, and that is something hareware-based routing/sw
 
 Note: these days, small routers also support Jumbo Frame. So I don't need to care this issue any longer...
 
-Tackling security issues
-------------------------
+##Tackling security issues
 
 VXLAN-based network virtualization raises some security issues. For example, an attacker can intrude or hyjack any VXLAN by spoofing VTEP(VXLAN Tunnel End Point). To prevent this kind of attack, some VTEP authentication mechanism will be introduced.
 
 One idea I have devised:
-
+```
       vhosts exchange some auth packets among themselves periodically.
 
       netns                                                      netns
@@ -206,12 +203,11 @@ One idea I have devised:
         [br]--[br-int]--[br-tun] === VXLAN === [br-tun]--[br-int]--[br]
 
                                   auth packet
-               
+```
 
 Note: this idea has not been implemented yet.
 
-Why so many bridges inside?
----------------------------
+##Why so many bridges inside?
 
 Why are there so many bridges? Linux bridges, br-int and br-tun...
 * br-int works as a MAC-learning switch.
