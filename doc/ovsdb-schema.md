@@ -42,7 +42,7 @@ The original OVSDB schema(JSON) can be converted into YAML using some python lib
 	 --------------
 
 * [Original OVSDB schema converted into YAML](https://github.com/araobp/neutron-lan/blob/master/ovsdb/vswitch.schema_2.0.0.yaml)
-* [NLAN schema in YAML](https://github.com/araobp/neutron-lan/blob/master/ovsdb/nlan.schema_0.0.3.yaml)
+* [NLAN schema in YAML](https://github.com/araobp/neutron-lan/blob/master/nlan/agent/share/nlan.schema_0.0.6.yaml)
 * [O/R mapper for OVSSB](https://github.com/araobp/neutron-lan/blob/master/nlan/agent/ovsdb.py)
 
 
