@@ -51,7 +51,7 @@ NLAN state file in YAML
 
 Actual NLAN state parameters are written in the following file:
 
-* [state.yaml](https://github.com/araobp/neutron-lan/blob/master/etc/state.yaml)
+* [state.yaml](https://github.com/araobp/neutron-lan/blob/master/etc/state/state.yaml)
 
 NLAN state file can work with a custom-made template engine as is indicated at the top line in the file: "#!template.dvsdvr"
 
