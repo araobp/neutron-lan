@@ -25,9 +25,9 @@ The latest OpenWrt release support Open vSwtich.
 
 ##Working with Docker
 
-1. Create an image of Debian/Ubuntu with Open vSwitch installed
+[Step1] Create an image of Debian/Ubuntu with Open vSwitch installed
 
-2. Allow ssh root login to the Docker container
+[Step2] Allow ssh root login to the Docker container
 ```
 /etc/ssh/ssh_config
 
@@ -35,13 +35,13 @@ The latest OpenWrt release support Open vSwtich.
 PermitRootLogin yes
 ```
 
-3. Append the following lines to $HOME/.bashrc
+[Step3] Append the following lines to $HOME/.bashrc
 ```
 /etc/init.d/ssh start
 /etc/init.d/openvswitch-switch start
 ```
 
-4. Create Docker containers
+[Step4] Create Docker containers
 
 For example, if the image name is 'router' then:
 ```
@@ -51,7 +51,7 @@ $ docker run -t -i --privileged=true --name router3 router /bin/bash
                            :
 ```
 
-5. Start Docker containers
+[Step5] Start Docker containers
 ```
 $ docker start router1
 $ docker start router2
@@ -59,19 +59,18 @@ $ docker start router3
          :
 ```
 
-6. Ping test
+[Step6] Ping test
 ```
 $ ./nlan.py -w 10 -v
 ```
 
-7. Copy NLAN Agent to the Docker containers
+[Step7] Copy NLAN Agent to the Docker containers
 ```
 $ ./nlan.py -m -v
 ```
 
-8. Update OVSDB schema on the Docker containers
+[Step8] Update OVSDB schema on the Docker containers
 ```
 $ ./schema.sh
 $ ./nlan.py db.update -v
 ```
-
