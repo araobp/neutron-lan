@@ -19,7 +19,7 @@ And I have learned from SaltStack that YAML is a very simple modeling language. 
 YAML for modeling neutron-lan
 -----------------------------
 
-Refer to [neutron-lan YAML state file](../etc/state.yaml).
+Refer to [neutron-lan YAML state file](../etc/state/state.yaml).
 
 When an administrator has finished modifying the state file, he or she executes a neutron-lan command "nlan.py" to generete CRUD operations (add/delete/set) in the form of Python OrderedDict objects, comparing the file and the one archived in a local git repo.
 
@@ -42,7 +42,7 @@ The OrderedDict objects are serialized into string data and sent to target OpenW
                         / Roster   /  
                        ------------
              
-Refer to [neutron-lan roster file](../etc/roster.yaml).
+Refer to [neutron-lan roster file](../etc/roster/roster.yaml).
 
 "nlan.py" can issue multiple requests to routers in parallel at the same time.
 
