@@ -39,7 +39,7 @@ def loads(string):
     elif t == 'str':
         pass
     else:
-        raise Exception("Type error: " + str(type(string)))
+        raise Exception("Type error: " + t)
 
     return v
 
@@ -210,19 +210,18 @@ def _yaml_load(filename, gitshow):
 
     return (sorted(values), STATE_ORDER)
 
-#
-# Returns diff in the unified format.
-#
 def _diff(list1, list2):
+'''
+Returns diff in the unified format.
+'''
     return unified_diff(list1, list2, 'before', 'after')
 
-
-# Outputs CRUD operations list for nlan-ssh.py
-# making diff between two YAML files.
-# crud_list: a list of [node, operation, model]
 def crud_diff(filename, git=-1):
-
-
+```
+Outputs CRUD operations list for nlan-ssh.py
+making diff between two YAML files.
+crud_list: a list of [node, operation, model]
+```
     if git <= 0: # w/o Git or diff between the current file and git show HEAD: 
         # After
         (list2, state_order2) = _yaml_load(filename, gitshow=False)

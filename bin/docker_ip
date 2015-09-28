@@ -1,0 +1,3 @@
+#!/bin/bash
+
+echo -ne `docker exec $1 ip route show | grep src | grep eth0 | tr -s ' ' | out -d ' ' -f9`

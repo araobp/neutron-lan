@@ -23,8 +23,8 @@ def update():
     elif platform == 'debian' or platform == 'raspbian':
         cmd('service openvswitch-switch stop')
         cmd('cp', schema, '/usr/share/openvswitch/vswitch.ovsschema')
+        cmd('ovsdb-tool convert /etc/openvswitch/conf.db', schema)
         cmd('service openvswitch-switch start')
-
 
 def getrow(*args):
     Row = ovsdb.Row
