@@ -1,6 +1,6 @@
 #Prerequisites
 
-##Python dependencies
+##NLAN python dependencies
 
 - python2.7
 - pyyaml
@@ -16,12 +16,6 @@ $wget http://openvswitch.org/releases/openvswitch-2.4.0.tar.gz
 Follow the instructions included in the archive.
 
 NLAN requires "dkms", "common" and "switch" only. Use dpkg command (dpkg -i) to install the deb packages.
-
-##Working with OpenWrt
-
-NLAN supports openwrt, raspbian and debian(ubuntu) platforms.
-
-The latest OpenWrt release support Open vSwtich.
 
 ##Working with Docker
 
