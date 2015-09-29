@@ -27,6 +27,12 @@ The latest OpenWrt release support Open vSwtich.
 
 [Step1] Create an image of Debian/Ubuntu with Open vSwitch installed
 
+You need to copy the following deb packages to the Docker containers:
+- openvswitch-switch_*.deb
+- openvswitch-common_*.deb
+
+Then "dpkg -i" to install them.
+
 [Step2] Allow ssh root login to the Docker container
 ```
 /etc/ssh/ssh_config
@@ -39,6 +45,13 @@ PermitRootLogin yes
 ```
 /etc/init.d/ssh start
 /etc/init.d/openvswitch-switch start
+nlan_rc="/etc/init.d/nlan"
+if [ -f "$nlan_rc" ]
+then
+    /etc/init.d/nlan start
+else
+    echo "$nlan_rc not found."
+fi
 ```
 
 [Step4] Create Docker containers
@@ -74,3 +87,12 @@ $ ./nlan.py -m -v
 $ ./schema.sh
 $ ./nlan.py db.update -v
 ```
+
+[Step9] Update and enable rc script for nlan
+```
+$ ./nlan.py system.rc update
+$ ./nlan.py system.rc enable
+```
+
+[StepX]
+Issue: Docker containers change their IP address every time they restart, so /etc/init.d/nlan doe not work properly.

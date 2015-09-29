@@ -28,6 +28,8 @@ def add():
         for vxlan_port in vxlan_ports:
             cmd('ovs-ofctl add-flow', br_tun, 'table=0,priority=1,in_port='+vxlan_port+',actions=resubmit(,2)')
 
+    cmd('ip link set dev', br_tun, 'up')
+    cmd('ip link set dev', br_int, 'up')
 
 def delete():
     

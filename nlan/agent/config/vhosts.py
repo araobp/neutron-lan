@@ -46,6 +46,7 @@ def _add_vhosts():
         cmdp('ovs-vsctl add-port', _connect, port, '-- set interface', port, 'type=internal')
         # Adds the port to the Linux bridge
         cmd('brctl addif', br, port)
+        cmd('ip link set dev', port, 'up')
 
 # TODO: this function is incomplete
 def _delete_vhosts():

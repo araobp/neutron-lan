@@ -1,0 +1,50 @@
+#!template.dvsdvr
+# Node 1: ptn_1 is OFS controlled by OFC, whereas l2sw_1 and 
+# other linux bridges are normal learning switches.
+openwrt1:
+   ptn_nodes:
+      - id: of_net 
+        nodes:
+          ptn: ptn_1 
+          l2sw: l2sw_1 
+        controller: tcp:172.17.42.1:6633
+   ptn_links:
+      - id: of_net 
+        local_ip: <local_ip>
+        remote_ips: <remote_ips> 
+openwrt2:
+   ptn_nodes:
+      - id: of_net 
+        nodes:
+          ptn: ptn_2 
+          l2sw: l2sw_2 
+        controller: tcp:172.17.42.1:6633
+   ptn_links:
+      - id: of_net 
+        local_ip: <local_ip>
+        remote_ips: <remote_ips> 
+   vhosts:
+      - network: 172.20.107.4/24
+        vhosts: 2
+        connect: ptn_2
+      - network: 172.21.107.4/24
+        vhosts: 2
+        connect: ptn_2
+openwrt3:
+   ptn_nodes:
+      - id: of_net 
+        nodes:
+          ptn: ptn_3 
+          l2sw: l2sw_3 
+        controller: tcp:172.17.42.1:6633
+   ptn_links:
+      - id: of_net 
+        local_ip: <local_ip>
+        remote_ips: <remote_ips> 
+   vhosts:
+      - network: 172.20.107.7/24
+        vhosts: 2
+        connect: ptn_3
+      - network: 172.21.107.7/24
+        vhosts: 2
+        connect: ptn_3

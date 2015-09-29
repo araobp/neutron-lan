@@ -19,38 +19,3 @@ openwrt3:
    passwd: root
    platform: debian 
 
-openwrt4:
-   host: <docker_ip> 
-   user: root
-   passwd: root
-   platform: debian 
-
-openwrt5:
-   host: <docker_ip> 
-   user: root
-   passwd: root
-   platform: debian 
-
-openwrt6:
-   host: <docker_ip> 
-   user: root
-   passwd: root
-   platform: debian 
-
-openwrt7:
-   host: <docker_ip> 
-   user: root
-   passwd: root
-   platform: debian 
-
-rpi1:
-   host: <docker_ip> 
-   user: root
-   passwd: root
-   platform: debian 
-
-master:
-   host: <docker_ip> 
-   user: root
-   passwd: root
-   platform: debian 
