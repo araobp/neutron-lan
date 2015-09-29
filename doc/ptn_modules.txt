@@ -32,21 +32,11 @@ PTN modules are comprised of the following ones:
 
 OpenFlow support
 ----------------
-Here, I use "ryu"(flow) as a reference OpenFlow controller.
-
-To install ryu,
-$ pip install ryu
-
-To show a list of ryu applications:
-$ ls /usr/local/lib/python2.7/dist-packages/ryu/app
-
-To start a specific app "simple-switch13"
-$ ryu-manager simple-switch13
-
+Here, I use ONOS as a reference OpenFlow controller.
 
 Network configuration to simulate OFS network
 
-                                          [ ryu  ]
+                                          [ ONOS ]
                                           tcp 6633
                                              ^
                                              | OpenFlow
@@ -72,7 +62,7 @@ openwrt1:
         nodes:
           ptn: ptn_1
           l2sw: l2sw_1
-        controller: tcp:10.8.0.1:6633  <== IP address of ryu controller
+        controller: tcp:10.8.0.1:6633  <== IP address of ONOS controller
    ptn_links:
       - id: of_net
         local_ip: <local_ip>
