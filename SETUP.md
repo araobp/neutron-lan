@@ -19,6 +19,8 @@ NLAN requires "dkms", "common" and "switch" only. Use dpkg command (dpkg -i) to 
 
 ##Working with Docker
 
+![working_with_docker](https://docs.google.com/drawings/d/161Bn80w8JZKQ7BXmIo0br7xQ4kqEdBc_XZ254zuORSU/pub?w=680&h=400)
+
 [Step1] Create an image of Debian/Ubuntu with Open vSwitch installed
 
 You need to copy the following deb packages to the Docker containers:
