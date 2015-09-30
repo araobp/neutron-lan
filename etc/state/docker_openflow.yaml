@@ -12,6 +12,9 @@ openwrt1:
       - id: of_net 
         local_ip: <local_ip>
         remote_ips: <remote_ips> 
+   command:
+     command:
+       - ip address add <local_ip>/16 dev eth0
 openwrt2:
    ptn_nodes:
       - id: of_net 
@@ -30,6 +33,9 @@ openwrt2:
       - network: 172.21.107.4/24
         vhosts: 2
         connect: ptn_2
+   command:
+     command:
+       - ip address add <local_ip>/16 dev eth0
 openwrt3:
    ptn_nodes:
       - id: of_net 
@@ -48,3 +54,7 @@ openwrt3:
       - network: 172.21.107.7/24
         vhosts: 2
         connect: ptn_3
+   command:
+     command:
+       - ip address add <local_ip>/16 dev eth0
+

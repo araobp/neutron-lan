@@ -21,7 +21,8 @@ NLAN_RPC_DIR = os.path.join(NLAN_DIR, 'agent/rpc')
 
 # NLAN default roster file
 #NLAN_ROSTER = 'roster.yaml'
-NLAN_ROSTER = 'docker.yaml'
+#NLAN_ROSTER = 'docker.yaml'
+NLAN_ROSTER = 'docker2.yaml'
 
 # NLAN default state file
 NLAN_STATE = 'state.yaml'
@@ -38,7 +39,7 @@ with open(ROSTER_YAML, 'r') as f:
     _roster = yaml.load(f.read())
 for router, attr in _roster.iteritems():
     if attr['host'] == '<docker_ip>':
- 	attr['host'] = docker_ip(router)
+        attr['host'] = docker_ip(router)
 ROSTER = _roster
 
 # Git repo (local)

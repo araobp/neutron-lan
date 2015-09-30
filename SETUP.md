@@ -41,6 +41,13 @@ PermitRootLogin yes
 ```
 /etc/init.d/ssh start
 /etc/init.d/openvswitch-switch start
+if [ -f /opt/nlan/nlan_agent.py ]
+then
+    cd /opt/nlan
+    python nlan_agent.py init.run false
+else
+    echo "nlan_agent.py not found."
+fi
 nlan_rc="/etc/init.d/nlan"
 if [ -f "$nlan_rc" ]
 then
@@ -68,27 +75,94 @@ $ docker start router3
          :
 ```
 
-[Step6] Ping test
+[Step6] Add a secondary IP address to Docker container
+
+Include "docker: true" in your roster file:
+```
+openwrt1:
+    host: 172.18.0.1
+    user: root
+    password: root
+    platform: debian
+    docker: true
+       :
+```
+
+And also Include "command..." in your state file:
+```
+openwrt1:
+    command:
+      command:
+         - ip address add <local_ip>/16 dev eth0
+           :
+```
+
+Then execute the following command:
+```
+$ sudo ip address add 172.18.42.1/16 dev docker 0
+$ ./nlan.py -S
+```
+
+Confirm that those secondary IP addresses have been correctly set to the containers. For example, if a container's name is "router1" then:
+```
+$ docker attach router1
+$ ip addr show
+$ ip route show
+```
+
+[Step7] Ping test
 ```
 $ ./nlan.py -w 10 -v
 ```
 
-[Step7] Copy NLAN Agent to the Docker containers
+[Step8] Copy NLAN Agent to the Docker containers
 ```
 $ ./nlan.py -m -v
 ```
 
-[Step8] Update OVSDB schema on the Docker containers
+[Step9] Update OVSDB schema on the Docker containers
 ```
 $ ./schema.sh
 $ ./nlan.py db.update -v
 ```
 
-[Step9] Update and enable rc script for nlan
+[Step10] Update and enable rc script for nlan
 ```
-$ ./nlan.py system.rc update
-$ ./nlan.py system.rc enable
+$ ./nlan.py system.rc enable_docker
 ```
 
-[StepX]
-Issue: Docker containers change their IP address every time they restart, so /etc/init.d/nlan doe not work properly.
+[Step11] Deploy your network
+
+For example,
+```
+$ ./nlan.py docker_openflow.yaml
+```
+
+[Step12(optional)] Flush arp table
+
+When you restart (stop/start) those Docker containers, NLAN agent (nlan_agent.py) will automatically resume the config by reading the previous state from OVSDB.
+
+You might face a problem that you cannot get access to those containers with the secondary IP addresses: In that case, you need to flush the arp table for the containers with this command:
+```
+$ ./nlan.py -F
+```
+
+Enjoy!
+
+##Working with Docker without setting secondary IP addresses
+
+
+Include "<docker_ip>" in your roster file:
+```
+openwrt1:
+    host: <docker_ip> 
+    user: root
+    password: root
+    platform: debian
+       :
+```
+NLAN master (nlan.py) replaces the placeholder <docker_ip> with the container's IP address (i.e., 172.17.42.X).
+
+Note that NLAN Agent's config-auto-resume feature does not work if you don't set secondary IP addresses to the containers.
+
+

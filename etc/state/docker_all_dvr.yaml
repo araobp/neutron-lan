@@ -2,11 +2,11 @@
 
 openwrt1:
    bridges: 
-      ovs_bridges: enabled
-#   gateway:
-#     rip: enabled
-#     network: eth0.2
-     network: eth2 
+     ovs_bridges: enabled
+#  gateway:
+#    rip: enabled
+#    network: eth0.2
+#    network: eth2 
    vxlan:
       - local_ip: <local_ip> 
         remote_ips: <remote_ips>

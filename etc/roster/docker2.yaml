@@ -1,24 +1,27 @@
 # 2015/9/28
 # Roster for network simulation on docker
 #
-# NLAN master will replace <docker_ip> with an IP address assigned to
-# eth0 of a Docker container.
-
+# You MUST run "nlan.py -S" to set a secondary IP address to
+# Docker container's eth0 interface before deploying your network.
+#
 openwrt1:
-   host: <docker_ip> 
+   host: 172.18.0.1 
    user: root
    passwd: root
    platform: debian 
+   docker: true
 
 openwrt2:
-   host: <docker_ip> 
+   host: 172.18.0.2 
    user: root
    passwd: root
    platform: debian 
+   docker: true
 
 openwrt3:
-   host: <docker_ip> 
+   host: 172.18.0.3 
    user: root
    passwd: root
    platform: debian 
+   docker: true
 

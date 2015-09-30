@@ -33,8 +33,11 @@ def rc(args=None):
     chmod = 'chmod 755 /etc/init.d/nlan'
     if platform == 'debian':
         init_script = os.path.join(share_dir, 'nlan_debian')
+        init_script_docker = os.path.join(share_dir, 'nlan_debian_docker')
         command['enable'] = ['cp {} /etc/init.d/nlan'.format(init_script), chmod, 'update-rc.d nlan defaults']
         command['update'] = ['cp {} /etc/init.d/nlan'.format(init_script)]
+        command['enable_docker'] = ['cp {} /etc/init.d/nlan'.format(init_script_docker), chmod, 'update-rc.d nlan defaults']
+        command['update_docker'] = ['cp {} /etc/init.d/nlan'.format(init_script_docker)]
         command['disable'] = ['rm /etc/init.d/nlan', 'update-rc.d nlan remove']
         command['status'] = ['ls /etc/rc2.d/']
     elif platform == 'openwrt':
@@ -62,6 +65,6 @@ def rc(args=None):
             for l in command[args]:
                 print output_cmd(l)
     else:
-        return "Usage:\nsystem.rc (enable|update|disable|status)"
+        return "Usage:\nsystem.rc (enable|update|disable|status|enable_docker|update_docker)"
         
 

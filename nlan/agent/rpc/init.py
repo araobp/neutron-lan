@@ -6,7 +6,7 @@ from cmdutil import *
 import ovsdb
 
 # Initialize the configuration
-def run(debug=False):
+def run(ovsdb_clear=True):
 
     # Stop all running Linux containers 
     try:
@@ -16,13 +16,12 @@ def run(debug=False):
     except:
         pass
 
-    if not debug:
-        # Delete all the ovs bridges
-        #cmd('ovs-vsctl --if-exists del-br br-tun')
-        #cmd('ovs-vsctl --if-exists del-br br-int')
-        bridges = output_cmd('ovs-vsctl list-br').rstrip('\n').split('\n')
-        for br in bridges:
-            cmd('ovs-vsctl del-br', br)
+    # Delete all the ovs bridges
+    #cmd('ovs-vsctl --if-exists del-br br-tun')
+    #cmd('ovs-vsctl --if-exists del-br br-int')
+    bridges = output_cmd('ovs-vsctl list-br').rstrip('\n').split('\n')
+    for br in bridges:
+        cmd('ovs-vsctl del-br', br)
 
     # Delete linux bridges (br*)
     """
@@ -68,20 +67,20 @@ def run(debug=False):
     for ns in l[:-1]:
         cmd('ip netns del', ns)
 
-    if not debug:
-        # Delete dnsmasq-related config
-        if __n__['platform'] == 'openwrt':
-            l = ovsdb.nlan_search('subnets', columns=['vni', 'ip_dvr'])
-            if l:
-                for d in l:
-                    if 'ip_dvr' in d and 'dhcp' in d['ip_dvr']:
-                        vni = str(d['vni'])
-                        cmd('uci delete', 'network.int_dvr'+vni)
-                        cmd('uci delete', 'dhcp.int_dvr'+vni)
-                        cmd('uci commit')
-                        cmd('/etc/init.d/network restart')
-                        cmd('/etc/init.d/dnsmasq restart')
-    if not debug:
+    # Delete dnsmasq-related config
+    if __n__['platform'] == 'openwrt':
+        l = ovsdb.nlan_search('subnets', columns=['vni', 'ip_dvr'])
+        if l:
+            for d in l:
+                if 'ip_dvr' in d and 'dhcp' in d['ip_dvr']:
+                    vni = str(d['vni'])
+                    cmd('uci delete', 'network.int_dvr'+vni)
+                    cmd('uci delete', 'dhcp.int_dvr'+vni)
+                    cmd('uci commit')
+                    cmd('/etc/init.d/network restart')
+                    cmd('/etc/init.d/dnsmasq restart')
+
+    if ovsdb_clear is True:
         # OVSDB transaction
         ovsdb.Row.clear()
 
