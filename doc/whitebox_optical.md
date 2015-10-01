@@ -83,3 +83,7 @@ etcd seems to be better than ZooKeeper... I need to examine it.
 Compared to OpenStack, Kubernetes seems to be light and faster... It includes CoreOS, Dokcer, etcd, Open vSwitch and VXLAN-based overlay networking.
 
 It might be an interesting idea to run the whole SDN/NFV system on Kubernetes...
+
+##FBOSS
+
+Something similar: [FBOSS](https://github.com/facebook/fboss)
