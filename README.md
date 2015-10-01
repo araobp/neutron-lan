@@ -8,6 +8,7 @@
 * [Command usage](https://github.com/araobp/neutron-lan/blob/master/doc/command_usage.md)
 * [Working with Docker](https://github.com/araobp/neutron-lan/blob/master/SETUP.md)
 * [Transport network (PTN) simulation](https://github.com/araobp/neutron-lan/blob/master/doc/ptn_modules.txt)
+* [Whitebox optical (just an idea)](doc/whitebox_optical.md)
 * [code](https://github.com/araobp/neutron-lan)
 
 ##INDEX
