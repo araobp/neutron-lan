@@ -587,10 +587,11 @@ if __name__=='__main__':
                     add_ip(router, attr['host']+'/16')
         elif options.flush_arp:
             print "flushing arp table..."
-            flush_arp = lambda ip: cmdutil.check_cmd('sudo arp -d', ip)
-            for router, attr in ROSTER.iteritems():
-                if 'docker' in attr and attr['docker']:
-                    flush_arp(attr['host'])
+            #flush_arp = lambda ip: cmdutil.check_cmd('sudo arp -d', ip)
+            #for router, attr in ROSTER.iteritems():
+            #    if 'docker' in attr and attr['docker']:
+            #        flush_arp(attr['host'])
+            cmdutil.check_cmd('sudo ip neigh flush all')
         else:
             parser.print_usage()
     except NlanException as e:

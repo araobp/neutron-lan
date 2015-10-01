@@ -29,6 +29,7 @@ openwrt${serial}:
         connect: ptn_${serial}
    command:
      command:
+       - ip neigh flush all
        - ip address add <local_ip>/16 dev eth0
 <% ddd += VHOSTS + 1 %>
 % endfor
