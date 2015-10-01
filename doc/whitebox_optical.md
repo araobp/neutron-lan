@@ -52,6 +52,10 @@ DCI with whitebox optical transport gears and legacy PE routers
 |Color            | VNI          |
 |Fiber Cable      | VXLAN tunnel |
 
+##Simulation environment
+- Docker (a simulated network on just a single PC)
+- Or physical whitebox switches supporting Linux, OVS/OVSDB and optical interfaces
+
 ##Technologies
 
 OpenConfig seems to be the right approach for whitebox optical:
