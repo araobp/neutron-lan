@@ -60,6 +60,11 @@ Real example: [Cyan N-series](http://www.cyaninc.com/products/n-series-hyperscal
 - Docker (a simulated network on just a single PC)
 - Or physical whitebox switches supporting Linux, ONIE, OVS/OVSDB and optical interfaces
 
+##Controller node
+- Config: initial config (deployment) and operations
+- Path computation for optical
+- Policy computation for routers
+
 ##Technologies
 
 OpenConfig seems to be the right approach for whitebox optical:
