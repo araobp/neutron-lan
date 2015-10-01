@@ -76,4 +76,10 @@ I have an experience on ZooKeeper and felt some problems on it:
 
 etcd seems to be better than ZooKeeper... I need to examine it.
 
+##Kubernetes
 
+[Kubernetes](http://kubernetes.io/) is a new breed of cloud infrastrucutre.
+
+Compared to OpenStack, Kubernetes seems to be light and faster... It includes CoreOS, Dokcer, etcd, Open vSwitch and VXLAN-based overlay networking.
+
+It might be an interesting idea to run the whole SDN/NFV system on Kubernetes...
