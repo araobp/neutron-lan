@@ -91,3 +91,10 @@ It might be an interesting idea to run the whole SDN/NFV system on Kubernetes...
 ##FBOSS
 
 Something similar: [FBOSS](https://github.com/facebook/fboss)
+
+##Telemetory
+
+One example is [Cassandra-log4j-appender](https://github.com/datastax/cassandra-log4j-appender) ([and my fork of it](https://github.com/araobp/cassandra-log4j2-appender))
+
+These days, Apache Spark is becoming very active for such a purpose: stream computing.
+
