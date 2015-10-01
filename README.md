@@ -4,7 +4,7 @@
 ![Raspberry Pi](https://raw.github.com/araobp/neutron-lan/master/misc/rpi.png)
 
 ##DevOps tool 'nlan'
-* [Slides](https://docs.google.com/presentation/d/1cAHGokqDmtH4qoJg7lWz2Hg0iefx8toigKe3x0xKHg0/pub?start=false&loop=false&delayms=3000)
+* [Slides](doc/NLAN.pdf)
 * [Command usage](https://github.com/araobp/neutron-lan/blob/master/doc/command_usage.md)
 * [Working with Docker](https://github.com/araobp/neutron-lan/blob/master/SETUP.md)
 * [Transport network (PTN) simulation](https://github.com/araobp/neutron-lan/blob/master/doc/ptn_modules.txt)
