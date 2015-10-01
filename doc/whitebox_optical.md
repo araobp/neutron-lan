@@ -10,6 +10,10 @@ DCI with whitebox optical transport gears and legacy PE routers
 
 Real example: [Cyan N-series](http://www.cyaninc.com/products/n-series-hyperscale-transport)
 
+##Who is promoting this concept?
+- Internet content providers operation a very large scale datacenters
+- Tier-1 carriers
+
 ##Architecture
 ```
                               E2E orchestrator   HBase, Cassandra, Spark etc         
