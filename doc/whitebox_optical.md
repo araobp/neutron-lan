@@ -6,6 +6,10 @@ Just an idea...
 
 DCI with whitebox optical transport gears and legacy PE routers
 
+##What is whitebox optical?
+
+Real example: [Cyan N-series](http://www.cyaninc.com/products/n-series-hyperscale-transport)
+
 ##Architecture
 ```
                               E2E orchestrator   HBase, Cassandra, Spark etc         
