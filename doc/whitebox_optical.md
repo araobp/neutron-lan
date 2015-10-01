@@ -76,6 +76,10 @@ OpenConfig seems to be the right approach for whitebox optical:
 - OSPF for automatic optical topology detection (requires M-Plane for optical)
 - Physical wirling by NLAN (initial config)
 
+##OpenConfig
+- [Web site](http://www.openconfig.net/)
+- [OpenConfig on github](https://github.com/openconfig)
+
 ##etcd
 
 I have an experience on ZooKeeper and felt some problems on it:
