@@ -23,6 +23,7 @@
 * [Initial config for Raspberry Pi](https://github.com/araobp/neutron-lan/blob/master/doc/initial-config-for-rpi.md)
 * [Test bed at my home](https://github.com/araobp/neutron-lan/wiki/Testbed)
 * [SDN in the past(I used to be a Telephony guy)](https://github.com/araobp/neutron-lan/blob/master/doc/sdn_in_the_past.md)
+* [Conclusion: SDN is a strange world](https://docs.google.com/drawings/d/1HdnCiv6eWiznVrqaUjqmbibhQqevKvPYAH1csx7H2q0/pub?w=960&h=720)
 
 
 ##BACKGROUND AND MOTIVATION
