@@ -8,14 +8,16 @@ DCI with whitebox optical transport gears and legacy PE routers
 
 ##Architecture
 ```
-                                      ^
-                                      |
-                                RESTCONF/YANG
-                                      |
-                                      V                            Clustering
+                              E2E orchestrator   HBase, Cassandra, Spark etc         
+                                      ^                 ^
+                                      |                 | Stream computing
+                                      |                 |
+                                RESTCONF/YANG     gRPC or Thrift (log/alaram/statistics)
+                                      |                 |
+                                      V                 |         Clustering
                +------------------------------------------------+               +--
-               | Orchestrator                                   | <-- NOSQL --> |
-               +------------------------------------------------+               +--
+               | Controller node on Docker/CoreOS               | <-- NOSQL --> |
+               +------------------------------------------------+  (e.g., etcd) +--
                   [Driver]                             [Driver]
                      ^                                    ^
                      |                                    |
