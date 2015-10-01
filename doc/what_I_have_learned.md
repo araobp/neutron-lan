@@ -7,4 +7,4 @@
 - Difficult to implement a rollback feature, although it is mandatory.
 - Legacy network gears are not dumb.
 - Declarative models (i.e., desired state or intent) are good for operators.
-- Whitebox is Linux with networking hardware
+- Whitebox is a special-purpose Linux server.
