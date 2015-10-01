@@ -69,7 +69,7 @@ Real example: [Cyan N-series](http://www.cyaninc.com/products/n-series-hyperscal
 
 OpenConfig seems to be the right approach for whitebox optical:
 - Protobuf/gRPC as Southbound API ([gRPC-go](https://github.com/grpc/grpc-go) and [gRPC-java](https://github.com/grpc/grpc-java))
-- RESTCONF/YANG as Northbound API (use [goyang](https://github.com/openconfig/goyang)), [pyangbind](https://github.com/robshakir/pyangbind) and/or ODL/ONOS)
+- RESTCONF/YANG as Northbound API (use [goyang](https://github.com/openconfig/goyang), [pyangbind](https://github.com/robshakir/pyangbind) and/or ODL/ONOS)
 - Python and/or Go lang to implement the agent
 - [etcd](https://github.com/coreos/etcd) (or ONOS/ODL distributed datastore) for config sharing among orchestrator nodes
 - Quagga/Zebra as routing daemon, Route Reflector and Route Server (PE simulation)
