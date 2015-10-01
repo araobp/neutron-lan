@@ -7,6 +7,7 @@
 - paramiko
 - scp
 - layered-yaml-attrdict-config==12.06.2
+- mako
 
 ##Open vSwitch installation
 

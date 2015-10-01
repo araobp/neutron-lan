@@ -574,8 +574,12 @@ if __name__=='__main__':
                                 cmdutil.check_cmd('git', GIT_OPTIONS, 'commit -m updated')
         elif not crud and not option and len(args) > 0: # NLAN rpc module execution
             main(router=router, doc=args, loglevel=loglevel, verbose=verbose, mime=mime)
+        elif crud and len(args) > 0: # CRUD operation
+            operation = option.lstrip('-') 
+            doc = str(argsmodel.parse_args(operation, args[0], *args[1:]))
+            main(router=router, operation=option, doc=doc, loglevel=loglevel, verbose=verbose, mime=mime)
         elif options.secondary_ip:
-            print "adding a secondary IP address"
+            print "adding a secondary IP address..."
             add_ip = lambda container, ip_and_mask: cmdutil.check_cmd('docker exec', container, 'ip address add', ip_and_mask, 'dev eth0')
             #del_ip = lambda container, ip_and_mask: cmdutil.check_cmd('docker exec', container, 'ip address del', ip_and_mask, 'dev eth0')
             for router, attr in ROSTER.iteritems():
@@ -587,10 +591,6 @@ if __name__=='__main__':
             for router, attr in ROSTER.iteritems():
                 if 'docker' in attr and attr['docker']:
                     flush_arp(attr['host'])
-        elif crud and len(args) > 0: # CRUD operation
-            operation = option.lstrip('-') 
-            doc = str(argsmodel.parse_args(operation, args[0], *args[1:]))
-            main(router=router, operation=option, doc=doc, loglevel=loglevel, verbose=verbose, mime=mime)
         else:
             parser.print_usage()
     except NlanException as e:

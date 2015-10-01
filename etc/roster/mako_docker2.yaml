@@ -1,0 +1,19 @@
+# 2015/9/28
+# Roster for network simulation on docker
+#
+# You MUST run "nlan.py -S" to set a secondary IP address to
+# Docker container's eth0 interface before deploying your network.
+#
+
+<%
+MAX = 10
+%>
+
+% for serial in range(1, MAX+1):
+openwrt${serial}:
+   host: 172.18.0.${serial}
+   user: root
+   passwd: root
+   platform: debian 
+   docker: true
+% endfor
