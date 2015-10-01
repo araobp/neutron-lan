@@ -59,11 +59,21 @@ DCI with whitebox optical transport gears and legacy PE routers
 ##Technologies
 
 OpenConfig seems to be the right approach for whitebox optical:
-- Protobuf/gRPC as Southbound API
-- RESTCONF/YANG as Northbound API
-- Go lang to implement the agent
+- Protobuf/gRPC as Southbound API ([gRPC-go](https://github.com/grpc/grpc-go) and [gRPC-java](https://github.com/grpc/grpc-java))
+- RESTCONF/YANG as Northbound API (use ONOS/ODL and/or [goyang](https://github.com/openconfig/goyang))
+- Python and/or Go lang to implement the agent
 - etcd (or ONOS/ODL distributed datastore) for config sharing among orchestrator nodes
 - Quagga/Zebra as routing daemon, Route Reflector and Route Server (PE simulation)
 - OSPF for automatic optical topology detection (requires M-Plane for optical)
 - Physical wirling by NLAN (initial config)
+
+##etcd
+
+I have an experience on ZooKeeper and felt some problems on it:
+- Nested ephemeral nodes unsupported.
+- Structure data unsupported: byte[] only.
+- Its API is not on HTTP.
+
+etcd seems to be better than ZooKeeper... I need to examine it.
+
 
