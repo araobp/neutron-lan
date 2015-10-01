@@ -54,7 +54,7 @@ DCI with whitebox optical transport gears and legacy PE routers
 
 ##Simulation environment
 - Docker (a simulated network on just a single PC)
-- Or physical whitebox switches supporting Linux, OVS/OVSDB and optical interfaces
+- Or physical whitebox switches supporting Linux, ONIE, OVS/OVSDB and optical interfaces
 
 ##Technologies
 
