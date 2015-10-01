@@ -62,7 +62,7 @@ OpenConfig seems to be the right approach for whitebox optical:
 - Protobuf/gRPC as Southbound API ([gRPC-go](https://github.com/grpc/grpc-go) and [gRPC-java](https://github.com/grpc/grpc-java))
 - RESTCONF/YANG as Northbound API (use ONOS/ODL and/or [goyang](https://github.com/openconfig/goyang))
 - Python and/or Go lang to implement the agent
-- etcd (or ONOS/ODL distributed datastore) for config sharing among orchestrator nodes
+- [etcd](https://github.com/coreos/etcd) (or ONOS/ODL distributed datastore) for config sharing among orchestrator nodes
 - Quagga/Zebra as routing daemon, Route Reflector and Route Server (PE simulation)
 - OSPF for automatic optical topology detection (requires M-Plane for optical)
 - Physical wirling by NLAN (initial config)
