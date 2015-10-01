@@ -98,3 +98,4 @@ One example is [Cassandra-log4j-appender](https://github.com/datastax/cassandra-
 
 These days, Apache Spark is becoming very active for such a purpose: stream computing.
 
+Note that those are just repositories of time-series data, and you also need to have an analyzer to analyze the data collected from the network.
