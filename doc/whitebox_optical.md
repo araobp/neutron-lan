@@ -46,7 +46,7 @@ DCI with whitebox optical transport gears and legacy PE routers
 ##Simulation
 
 |Optical          | VXLAN        |
-----------------------------------
+|-----------------|--------------|
 |Color            | VNI          |
 |Fiber Cable      | VXLAN tunnel |
 
