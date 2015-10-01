@@ -77,6 +77,7 @@ OpenConfig seems to be the right approach for whitebox optical:
 - Physical wirling by NLAN (initial config)
 
 ##OpenConfig
+- [Slides by Google at NANOG](https://www.nanog.org/sites/default/files//meetings/NANOG64/1011/20150604_George_Sdn_In_The_v1.pdf)
 - [Web site](http://www.openconfig.net/)
 - [OpenConfig on github](https://github.com/openconfig)
 
