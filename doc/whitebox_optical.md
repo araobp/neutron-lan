@@ -1,4 +1,4 @@
-#Whitebox optical
+#Whitebox optical simulation
 
 Just an idea...
 
