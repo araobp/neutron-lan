@@ -5,10 +5,10 @@ import subprocess
 
 IMAGE = 'router'  # Docker image name
 
-name = lambda prefix, i: '{} {}'.format(prefix, str(i))
+name = lambda prefix, i: '{}{}'.format(prefix, str(i))
 run = lambda prefix, i: ['docker', 'run', '-i', '-t', '-d', '--privileged',
         '--name', name(prefix, i), IMAGE, '/bin/bash']
-stop = lambda prefix, i: ['docker', 'start', name(prefix, i)]
+stop = lambda prefix, i: ['docker', 'stop', name(prefix, i)]
 start = lambda prefix, i: ['docker', 'start', name(prefix, i)]
 rm = lambda prefix, i: ['docker', 'rm', name(prefix, i)]
 

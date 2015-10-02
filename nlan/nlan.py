@@ -497,6 +497,7 @@ if __name__=='__main__':
     parser.add_option("-M", "--mime", help="MIME Mulitpart output", action="store_true", default=False)
     parser.add_option("-S", "--secondary_ip", help="add secondary IP address to Docker container's eth0 interface", action="store_true", default=False)
     parser.add_option("-F", "--flush_arp", help="flush arp table for docker containers", action="store_true", default=False)
+    parser.add_option("-A", "--docker0_address", help="assign a secondary IP address to docker0", action="store_true", default=False)
     parser.add_option("-v", "--verbose", help="verbose output", action="store_true", default=False)
 
     (options, args) = parser.parse_args()
@@ -592,6 +593,12 @@ if __name__=='__main__':
             #    if 'docker' in attr and attr['docker']:
             #        flush_arp(attr['host'])
             cmdutil.check_cmd('sudo ip neigh flush all')
+        elif options.docker0_address:
+            print "Assigning a seconday IP address to docker0..."
+            try:
+                cmdutil.check_cmd('sudo ip address add 172.18.42.1/16 dev docker0')
+            except:
+                print "(already assigned)"
         else:
             parser.print_usage()
     except NlanException as e:

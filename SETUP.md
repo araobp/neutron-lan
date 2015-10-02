@@ -94,6 +94,7 @@ And also Include "command..." in your state file:
 openwrt1:
     command:
       command:
+         - ip neigh flush all
          - ip address add <local_ip>/16 dev eth0
            :
 ```
