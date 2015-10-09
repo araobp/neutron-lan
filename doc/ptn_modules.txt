@@ -1,6 +1,8 @@
 PTN modules
 ===========
 
+![WAN simulation NW](https://docs.google.com/drawings/d/1VKfKlwnzWQ2-ImfXeB5uNegGBK0BnaGU_4lS8h4Qpcw/pub?w=960&h=720)
+
 nlan with the PTN modules can be used as a network simulator:
 - Pseudo-wire and VPLS (Packet Transport Network) simulation
 - OFS network simulation
