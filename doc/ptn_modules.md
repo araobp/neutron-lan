@@ -1,5 +1,4 @@
-PTN modules
-===========
+##PTN modules
 
 ![WAN simulation NW](https://docs.google.com/drawings/d/1VKfKlwnzWQ2-ImfXeB5uNegGBK0BnaGU_4lS8h4Qpcw/pub?w=960&h=720)
 
@@ -11,6 +10,7 @@ Optionally you may run Quagga as a routing daemon to set the routing table auton
 
 "vhosts" module is for simulating LAN (hubs and hosts) behind CE router.
 
+```
                            <------- "ptn_l2vpn" ------------------->
 <- "vhosts" ->                <-- "ptn_nodes" --><-- "ptn_links" -->
                . . . . . .
@@ -24,6 +24,7 @@ Optionally you may run Quagga as a routing daemon to set the routing table auton
 [vHost]---|  | :         :    +------+    +------+    VXLAN tunnel
           +--+ :         :
                . . . . . .
+```
 
 PTN modules are comprised of the following ones:
 * "ptn_nodes" module creates br-tun and br-int.
@@ -32,12 +33,13 @@ PTN modules are comprised of the following ones:
 * "vhosts" module creates virtual hosts and linux bridges associated with the hosts. 
 
 
-OpenFlow support
-----------------
+##OpenFlow support
+
 Here, I use ONOS as a reference OpenFlow controller.
 
 Network configuration to simulate OFS network
 
+```
                                           [ ONOS ]
                                           tcp 6633
                                              ^
@@ -55,9 +57,9 @@ Network configuration to simulate OFS network
           +--+ :         :                This br-tun
                . . . . . .                works as OFS
                                           in this case.
-
+```
 And here is a sample YAML config for nlan to create two OFSes connected to each other:
-- - - - - -
+```
 openwrt1:
    ptn_nodes:
       - id: of_net
@@ -94,8 +96,7 @@ openwrt2:
       - network: 172.21.107.4/24
         vhosts: 2
         connect: ptn_2
-- - - - -
-
+```
 TODO
 ----
 * Support vHosts directly connected to br-tun.
