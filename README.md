@@ -6,7 +6,7 @@
 ##DevOps tool 'nlan'
 * [Slides](doc/NLAN.pdf)
 * [Command usage](https://github.com/araobp/neutron-lan/blob/master/doc/command_usage.md)
-* [Working with Docker](https://github.com/araobp/neutron-lan/blob/master/SETUP.md)
+* [Working with Docker](https://github.com/araobp/neutron-lan/blob/master/SETUP.md) ==> I have also been working on [Golang-version of this project](https://github.com/araobp/nlan)
 * [code](https://github.com/araobp/neutron-lan)
 
 ##INDEX
