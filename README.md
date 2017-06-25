@@ -1,15 +1,15 @@
-#neutron-lan
+# neutron-lan
 
 ![neutron-lan testbed](https://raw.github.com/araobp/neutron-lan/master/misc/neutron-lan-testbed.png)
 ![Raspberry Pi](https://raw.github.com/araobp/neutron-lan/master/misc/rpi.png)
 
-##DevOps tool 'nlan'
+## DevOps tool 'nlan'
 * [Slides](doc/NLAN.pdf)
 * [Command usage](https://github.com/araobp/neutron-lan/blob/master/doc/command_usage.md)
 * [Working with Docker](https://github.com/araobp/neutron-lan/blob/master/SETUP.md) ==> I have also been working on [another work to optimize this tool for Docker](https://github.com/araobp/nlan)
 * [code](https://github.com/araobp/neutron-lan)
 
-##INDEX
+## INDEX
 * [Software Defined Networking](https://github.com/araobp/neutron-lan/blob/master/doc/software_defined_networking.md)
 * [YAML-based network modeling](https://github.com/araobp/neutron-lan/blob/master/doc/modeling.md)
 * [OVSDB schema for neutron-lan](https://github.com/araobp/neutron-lan/blob/master/doc/ovsdb-schema.md)
@@ -24,7 +24,7 @@
 * [What I have learned from this project](doc/what_I_have_learned.md)
 
 
-##BACKGROUND AND MOTIVATION
+## BACKGROUND AND MOTIVATION
 
 This is my personal project to **study SDN(Software-Defined Networking)** by configuring a openstack-neutron-like network over OpenWRT routers at home (I call it "neturon-lan") and making some SDN-related experiments on the network.
 
@@ -34,7 +34,7 @@ I am also interested in the distributed virtual switch and distributed virtual r
 
 As for network service abstraction, there are a lot of SDN and DevOps platforms out there. However, I will develop a DevOps-like tool on my own because of the CPU and memory limitaions of OpenWRT routers.
 
-##HOW VXLAN WORKS
+## HOW VXLAN WORKS
 
 **neutron-lan** is partly based on the OpenStack neutron networking architecture.
 
@@ -151,7 +151,7 @@ You can manually add the entries to br-tun using ovs-ofctl command like this:
     $ ovs-ofctl add-flow br-tun "table=21,priority=0,actions=drop"
 ```
 
-##Technology choice
+## Technology choice
 
 I thought of [OpenDaylight](https://wiki.opendaylight.org/view/Main_Page) as a platform for this project at first, but it's too heavy for such a small network, and the hardest thing for me is to write code in Java for ODL: too complex for me (Eclipse, OSGi, Maven, YANG...). However, it's service abstraction layer [MD-SAL](https://wiki.opendaylight.org/view/OpenDaylight_Controller:MD-SAL:Architecture) is quite interesting. It's sort of a perfect network abstraction mechanism...
 
@@ -178,7 +178,7 @@ As a reference, I looked into [SaltStack](http://www.saltstack.com/). Although i
     
 ```
 
-##MTU issue
+## MTU issue
 
 Since the VXLAN overhead is 50 bytes, you need to adjust path MTU on each end host in some way.
 
@@ -189,7 +189,7 @@ I would chose the latter option, and that is something hareware-based routing/sw
 
 Note: these days, small routers also support Jumbo Frame. So I don't need to care this issue any longer...
 
-##Tackling security issues
+## Tackling security issues
 
 VXLAN-based network virtualization raises some security issues. For example, an attacker can intrude or hyjack any VXLAN by spoofing VTEP(VXLAN Tunnel End Point). To prevent this kind of attack, some VTEP authentication mechanism will be introduced.
 
@@ -209,7 +209,7 @@ One idea I have devised:
 
 Note: this idea has not been implemented yet.
 
-##Why so many bridges inside?
+## Why so many bridges inside?
 
 Why are there so many bridges? Linux bridges, br-int and br-tun...
 * br-int works as a MAC-learning switch.
