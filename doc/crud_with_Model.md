@@ -1,14 +1,13 @@
-CRUD with Model object
-======================
+# CRUD with Model object
+
 2014/4/25, 5/26
 
 nlan_agent.py automatically generates the following variables in the global name space of a called config module, and save the variables(_param) in OVSDB at the end of the transaction.
 
-<pre>
+```
 _param1, _para2, _para3...        (1) 
 _param1_, _param2_, _param3_...   (2)
 param_, param2_, param3_... (3)
-</pre>
 
 (1) from NLAN Master -- new values 
 (2) either from NLAN Master or from OVSDB -- if not new values then old values
@@ -60,3 +59,4 @@ For delete,
       command param_
 
 
+```
