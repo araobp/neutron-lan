@@ -1,4 +1,4 @@
-##PTN modules
+## PTN modules
 
 ![WAN simulation NW](https://docs.google.com/drawings/d/1VKfKlwnzWQ2-ImfXeB5uNegGBK0BnaGU_4lS8h4Qpcw/pub?w=960&h=720)
 
@@ -33,7 +33,7 @@ PTN modules are comprised of the following ones:
 * "vhosts" module creates virtual hosts and linux bridges associated with the hosts. 
 
 
-##OpenFlow support
+## OpenFlow support
 
 Here, I use ONOS as a reference OpenFlow controller.
 
@@ -97,8 +97,8 @@ openwrt2:
         vhosts: 2
         connect: ptn_2
 ```
-TODO
-----
+## TODO
+
 * Support vHosts directly connected to br-tun.
 * Some utility tool to send ping from within netns.
 
