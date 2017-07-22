@@ -1,6 +1,6 @@
-#NLAN Command Usage
+# NLAN Command Usage
 
-##DevOps operations
+## DevOps operations
 ```
 - copy NLAN Agent and NLAN modules to remote routers
 $ nlan.py -m
@@ -39,7 +39,7 @@ $ nlan.py -w 100
 $ nlan.py -w -50 
 ```
 
-##Working with a local Git repo
+## Working with a local Git repo
 ```
 - deploy a network service with a default state file (the state file is commited to the local git repo after the deployment)
 $ nlan.py -G deploy 
@@ -49,7 +49,7 @@ $ nlan.py init.run
 $ nlan.py -R deploy
 ```
 
-##CRUD operations (using nlan.py)
+## CRUD operations (using nlan.py)
 ```
 print a list of modules
 $ nlan.py -s
@@ -70,7 +70,7 @@ $ nlan.py -t openwrt1 --get subnets _index=10
 $ nlan.py -t openwrt1 --get subnets
 ```
 
-##Local CRUD operations (w/o using nlan.py)
+## Local CRUD operations (w/o using nlan.py)
 ```
 print a list of modules
 $ nlan_agent.py -s
@@ -91,18 +91,18 @@ $ nlan_agent.py --get subnets _index=10
 $ nlan_agent.py --get subnets
 ```
 
-##Scenario Runner
+## Scenario Runner
 ```
 - execute a scenario (e.g., a scenario 'all.yaml')
 $ nlans.py all.yaml
 ```
 
-##MIME Multipart output
+## MIME Multipart output
 ```
 $ nlan.py --mime --debug --verbose <other options/arguments>
 ```
 
-##Maintenance
+## Maintenance
 ```
 - echo test
 $ nlan.py test.echo Hello World!
@@ -136,7 +136,7 @@ $ nlan.py init.run
 $ nlan.py system.reboot
 ```
 
-##NLAN schema update
+## NLAN schema update
 ```
 Update 'env.py' and 'schema.sh' at first. Then,
 $ schema.sh
@@ -146,7 +146,7 @@ $ nlan db.update
 Do not forget to update env.py either.
 ```
 
-##Using NLAN REST APIs
+## Using NLAN REST APIs
 ```
 $ curl -s -H Content-Type:application/json -X POST http://192.168.56.101:8080/_ALL/rpc/test/echo?params=Hello!
 $ curl -s -H Content-Type:application/json -X OPTIONS http://192.168.56.101:8080?params=subnets
