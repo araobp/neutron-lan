@@ -46,7 +46,7 @@ Configuring libncurses.
 Configuring quagga-vtysh.
 </pre>
 
-I have intalled the quagga-ripd, quagga-zebra and quagga-btysh packages on OpenWRT1. Then I try to use vtysh:
+I have intalled the quagga-ripd, quagga-zebra and quagga-vtysh packages on OpenWRT1. Then I try to use vtysh:
 
 <pre>
 root@OpenWrt:~# /etc/init.d/quagga start
